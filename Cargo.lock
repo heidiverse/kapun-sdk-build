@@ -5222,6 +5222,7 @@ dependencies = [
 name = "kapun-presentation-rust"
 version = "0.1.0"
 dependencies = [
+ "kapun-util-rust",
  "uniffi",
 ]
 
@@ -5232,6 +5233,7 @@ dependencies = [
  "anyhow",
  "heidi-jwt",
  "josekit",
+ "kapun-util-rust",
  "openidconnect-federation",
  "reqwest 0.11.27",
  "serde_json",
