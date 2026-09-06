@@ -19,13 +19,12 @@ plugins {
 // The plugin regenerates on every build by default, so the commit hash stays accurate even
 // across builds with no other Kotlin/Rust changes.
 val gitCommit = runCatching {
-    val process = ProcessBuilder("git", "rev-parse", "--short", "HEAD")
-        .directory(rootDir)
-        .redirectErrorStream(true)
-        .start()
-    val output = process.inputStream.bufferedReader().readText().trim()
-    if (process.waitFor() == 0) output else null
-}.getOrNull() ?: "unknown"
+    providers.exec {
+        workingDir = rootDir
+        commandLine("git", "rev-parse", "--short", "HEAD")
+        isIgnoreExitValue = true
+    }.standardOutput.asText.get().trim()
+}.getOrNull()?.takeIf { it.isNotEmpty() } ?: "unknown"
 
 buildConfig {
     className("KapunSdkInfo")
