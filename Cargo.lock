@@ -3831,7 +3831,7 @@ dependencies = [
  "chrono",
  "itertools 0.14.0",
  "josekit",
- "kapun-x509 0.1.0 (git+https://github.com/heidiverse/kapun-sdk.git)",
+ "kapun-x509 0.1.0 (git+https://github.com/KapunSDK/kapun-sdk.git)",
  "serde",
  "serde_json",
  "tracing",
@@ -4750,7 +4750,7 @@ dependencies = [
  "getrandom 0.3.4",
  "hmac 0.13.0",
  "k256",
- "kapun-crypto-provider 0.1.0 (git+https://github.com/heidiverse/kapun-sdk.git?branch=feature%2Fcrypto-provider)",
+ "kapun-crypto-provider 0.1.0 (git+https://github.com/KapunSDK/kapun-sdk.git?branch=feature%2Fcrypto-provider)",
  "ml-dsa",
  "p256 0.13.2",
  "p384",
@@ -5082,7 +5082,7 @@ dependencies = [
 [[package]]
 name = "kapun-crypto-provider"
 version = "0.1.0"
-source = "git+https://github.com/heidiverse/kapun-sdk.git?branch=feature%2Fcrypto-provider#bd6f33c3c1459ef429ac8b668fa950699fcbf8d3"
+source = "git+https://github.com/KapunSDK/kapun-sdk.git?branch=feature%2Fcrypto-provider#bd6f33c3c1459ef429ac8b668fa950699fcbf8d3"
 dependencies = [
  "oid-registry",
 ]
@@ -5374,7 +5374,7 @@ dependencies = [
  "base64 0.22.1",
  "flate2",
  "josekit",
- "kapun-crypto-provider 0.1.0 (git+https://github.com/heidiverse/kapun-sdk.git?branch=feature%2Fcrypto-provider)",
+ "kapun-crypto-provider 0.1.0 (git+https://github.com/KapunSDK/kapun-sdk.git?branch=feature%2Fcrypto-provider)",
  "p12",
  "pem",
  "rand 0.8.8",
@@ -5393,7 +5393,7 @@ dependencies = [
 [[package]]
 name = "kapun-x509"
 version = "0.1.0"
-source = "git+https://github.com/heidiverse/kapun-sdk.git#476effa11e26edc44410c1414f67d20ee6e77239"
+source = "git+https://github.com/KapunSDK/kapun-sdk.git#476effa11e26edc44410c1414f67d20ee6e77239"
 dependencies = [
  "josekit",
  "oid-registry",
