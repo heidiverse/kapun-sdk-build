@@ -33,13 +33,13 @@ actual class KapunSdk(
 	private val hardwareSignerFactory: HardwareSignerFactory,
 ) {
 
-	actual fun initialize(logSink: LogSink?) {
+	actual fun initialize(logSink: LogSink?, databaseName: String) {
 		Logger.sink = logSink
 		bridgeAllRustLogSinks()
 		KapunTrust().initialize()
 		KapunIssuance().initialize()
 		KapunVisualization().initialize()
-		KapunWalletKoinContext.initialize {
+		KapunWalletKoinContext.initialize(databaseName) {
 			modules(
 				module {
 					single<HardwareSignerFactory> { hardwareSignerFactory }

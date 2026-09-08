@@ -22,16 +22,20 @@ package org.kapunsdk.wallet.di
 import org.koin.core.Koin
 import org.koin.core.KoinApplication
 import org.koin.dsl.koinApplication
+import org.kapunsdk.wallet.DEFAULT_DATABASE_NAME
 
 internal object KapunWalletKoinContext {
 
 	private lateinit var koinApp: KoinApplication
 	lateinit var koin: Koin
 
-	fun initialize(declaration: KoinApplication.() -> Unit = {}) {
+	fun initialize(
+		databaseName: String = DEFAULT_DATABASE_NAME,
+		declaration: KoinApplication.() -> Unit = {},
+	) {
 		koinApp = koinApplication {
 			declaration()
-			kapunWalletModules()
+			kapunWalletModules(databaseName)
 		}
 		koin = koinApp.koin
 	}

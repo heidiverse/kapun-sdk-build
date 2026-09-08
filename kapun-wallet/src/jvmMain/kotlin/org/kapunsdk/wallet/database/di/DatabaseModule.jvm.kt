@@ -22,5 +22,5 @@ package org.kapunsdk.wallet.database.di
 
 import org.koin.core.module.Module
 
-internal actual fun Module.sqliteDriverModule() {
+internal actual fun Module.sqliteDriverModule(databaseName: String) {
 }
