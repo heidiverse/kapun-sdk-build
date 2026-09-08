@@ -88,8 +88,8 @@ mod issuance {
         signing::{BatchSigner, KeyType, NativeSigner, SignerFactory},
         uniffi_reqwest::HsmSupportObject,
     };
-    use kapun_util_rust::{log_debug, log_warn};
     use kapun_crypto_rust::jwx::EncryptionParameters;
+    use kapun_util_rust::{log_debug, log_warn};
 
     const RESPONSE_TYPE_CODE: &str = "code";
 
@@ -2700,351 +2700,82 @@ mod issuance {
     #[allow(clippy::unwrap_used, clippy::expect_used)]
     mod test_issuance {
         use super::*;
-        use crate::get_reqwest_client;
         use crate::issuance::models::AuthorizationCode;
-        use crate::testing::new_native_signer;
-        use crate::{crypto::signing::SoftwareKeyPair, issuance::models::Grants};
-        use reqwest::Url;
+        use crate::issuance::models::Grants;
         use reqwest_middleware::ClientBuilder;
-        use reqwest_retry::{RetryTransientMiddleware, policies::ExponentialBackoff};
-        use serde_json::json;
         use std::{
-            io::BufReader,
+            io::{Read, Write},
             net::TcpListener,
-            sync::{Arc, Once},
         };
 
-        fn setup_proxy() {
-            static SET_PROXY: Once = Once::new();
-            SET_PROXY.call_once(|| {
-                // crate::uniffi_reqwest::set_proxy("127.0.0.1".to_string(), 8080);
-            });
-        }
-
-        const TEST_BACKEND_URL: &str = "https://sprind-eudi-hsm-connector-ws-dev.ubique.ch/v1";
-
         #[tokio::test]
-        // WARNING: This test case works as long as the demo issuer by bundesdruckerei.de is running. In case it stops, another real life demo issuer needs to be found.
         async fn test_resolve_credential_offer() {
-            setup_proxy();
+            let client = ClientBuilder::new(
+                reqwest::Client::builder().no_proxy().build().unwrap(),
+            )
+            .build();
 
-            let retry_policy = ExponentialBackoff::builder().build_with_max_retries(1);
-            let client = ClientBuilder::new(get_reqwest_client().build().unwrap())
-                .with(RetryTransientMiddleware::new_with_policy(retry_policy))
-                .build();
-
-            let err_cases = [""];
-            let ok_cases = [
-                (
-                    "openid-credential-offer://?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fdemo.pid-issuer.bundesdruckerei.de%2Fc1%22%2C%22credential_configuration_ids%22%3A%5B%22pid-sd-jwt%22%5D%2C%22grants%22%3A%7B%22authorization_code%22%3A%7B%7D%7D%7D",
-                    CredentialOfferParameters {
-                        credential_issuer: "https://demo.pid-issuer.bundesdruckerei.de/c1"
-                            .parse()
-                            .unwrap(),
-                        credential_configuration_ids: vec!["pid-sd-jwt".to_string()],
-                        grants: Some(Grants {
-                            authorization_code: Some(AuthorizationCode {
-                                issuer_state: None,
-                                authorization_server: None,
-                            }),
-                            pre_authorized_code: None,
-                        }),
-                    },
-                ),
-                (
-                    // Created via: https://issuer.eudiw.dev/credential_offer
-                    "https://tester.issuer.eudiw.dev/credential_offer?credential_offer={%22credential_issuer%22:%20%22https://issuer.eudiw.dev%22,%20%22credential_configuration_ids%22:%20[%22eu.europa.ec.eudi.pid_jwt_vc_json%22,%20%22eu.europa.ec.eudi.loyalty_mdoc%22],%20%22grants%22:%20{%22authorization_code%22:%20{}}}",
-                    CredentialOfferParameters {
-                        credential_issuer: "https://issuer.eudiw.dev".parse().unwrap(),
-                        credential_configuration_ids: vec![
-                            "eu.europa.ec.eudi.pid_jwt_vc_json".to_string(),
-                            "eu.europa.ec.eudi.loyalty_mdoc".to_string(),
-                        ],
-                        grants: Some(Grants {
-                            authorization_code: Some(AuthorizationCode {
-                                issuer_state: None,
-                                authorization_server: None,
-                            }),
-                            pre_authorized_code: None,
-                        }),
-                    },
-                ),
-            ];
-
-            for c in err_cases.into_iter() {
-                assert!(resolve_credential_offer(c, &client).await.is_err());
-            }
-
-            for (c, expected) in ok_cases.into_iter() {
-                let offer = resolve_credential_offer(c, &client).await.unwrap();
-                assert!(
-                    offer == expected,
-                    "unexpected result for {c}:\n\t{offer:?}\n\t{expected:?}"
-                );
-            }
-        }
-
-        // #[tokio::test]
-        // These tests need a running backend, ignoring for now
-        async fn test_issuance_par() {
-            setup_proxy();
-
-            let offer = get_demo_credential_offer_authorization_code()
-                .await
-                .unwrap();
-            run_test_issuance(offer).await;
-        }
-
-        // #[tokio::test]
-        // These tests need a running backend, ignoring for now
-        async fn test_issuance_preauth() {
-            setup_proxy();
-
-            let offer = get_demo_credential_offer_preauth().await.unwrap();
-            run_test_issuance(offer).await;
-        }
-
-        async fn run_test_issuance(offer: String) {
-            static MUTEX: Mutex<()> = Mutex::new(());
-            let _lock = MUTEX.lock();
-
-            dbg!(&offer);
-
-            let auth_key = new_native_signer();
-            let issuance = Arc::new(OID4VciIssuance::init_issuance(
-                Arc::new(OidcSettings::new(
-                    "http://localhost:3001/".to_string(),
-                    "c3ce7a6c-2bbb-4abe-909c-41bc9463d3c5".to_string(),
-                    None,
-                )),
-                Arc::new(WalletBackend::new(TEST_BACKEND_URL.to_string())),
-                auth_key.clone(),
-            ));
-
-            // XXX: no auth metadata, these tests are broken now :(
-            let auth_step = issuance
-                .clone()
-                .initialize_issuance(&offer, None, false, None, None, None, None, None)
-                .await
-                .unwrap();
-            dbg!(&auth_step);
-
-            let bind_url = format!("0.0.0.0:{}", 3001);
-            let listener = TcpListener::bind(&bind_url).unwrap();
-
-            let mut code = None;
-            let mut _state = None;
-            let mut tx_code = None;
-            match auth_step {
-                AuthorizationStep::BrowseUrl { url, .. } => {
-                    dbg!(&url);
-                    let _ = open::that(url);
-                    if let Some(mut stream) = listener.incoming().flatten().next() {
-                        {
-                            let mut reader = BufReader::new(&stream);
-                            use std::io::BufRead;
-                            let mut request_line = String::new();
-                            reader.read_line(&mut request_line).unwrap();
-
-                            let redirect_url = request_line.split_whitespace().nth(1).unwrap();
-                            let url = Url::parse(&("http://localhost".to_string() + redirect_url))
-                                .unwrap();
-                            for (key, value) in url.query_pairs() {
-                                if key == "code" {
-                                    code = Some(value.to_string());
-                                } else if key == "state" {
-                                    _state = Some(value.to_string());
-                                }
-                            }
-                        }
-
-                        let message = "Go back to your terminal :)";
-                        let response = format!(
-                            "HTTP/1.1 200 OK\r\ncontent-length: {}\r\n\r\n{}",
-                            message.len(),
-                            message
-                        );
-                        use std::io::Write;
-                        stream.write_all(response.as_bytes()).unwrap();
-                    }
-                }
-                AuthorizationStep::EnterTransactionCode { .. } => {
-                    println!("Enter transaction code: {:?}", auth_step);
-                    tx_code = Some(std::io::stdin().lines().next().unwrap().unwrap());
-                }
-                AuthorizationStep::None => {}
-                AuthorizationStep::WithPresentation { .. } => {}
-                AuthorizationStep::Finished { .. } => {}
-            }
-
-            dbg!(&_state);
-
-            let num_credentials_per_type = 20;
-            let expected_num_types = 2;
-            let is_for_pre_authorized_code = false;
-            let credentials = issuance
-                .clone()
-                .finalize_issuance(
-                    code,
-                    tx_code,
-                    num_credentials_per_type,
-                    Arc::new(TestSignerFactory {}),
-                    None,
-                    None,
-                    is_for_pre_authorized_code,
-                    true,
-                )
-                .await
-                .unwrap();
-            println!("got {} credentials", credentials.credentials.len());
-            assert!(
-                credentials.credentials.len()
-                    == expected_num_types * num_credentials_per_type as usize
-            );
-
-            let metadata = issuance.get_oidc_metadata().unwrap();
-            let tokens = credentials.tokens.clone();
-            drop(issuance);
-            drop(credentials);
-
-            if tokens.refresh_token.is_none() {
-                println!("no refresh token, test ends here");
-                return;
-            }
-            supplement_test_issuance(metadata, auth_key, tokens, is_for_pre_authorized_code).await;
-        }
-
-        async fn supplement_test_issuance(
-            metadata: OidcMetadata,
-            auth_key: Arc<dyn NativeSigner>,
-            tokens: DeviceBoundTokens,
-            is_for_pre_authorized_code: bool,
-        ) {
-            // Reconstitute issuance from stored metadata:
-            let issuance = Arc::new(
-                OID4VciIssuance::from_metadata(
-                    metadata,
-                    Arc::new(WalletBackend::new(TEST_BACKEND_URL.to_string())),
-                    auth_key.clone(),
-                )
-                .unwrap(),
-            );
-            let signer_factory = Arc::new(TestSignerFactory {});
-
-            // Token refresh:
-            let tokens = issuance
-                .refresh_token(tokens, None, None, None, None)
-                .await
-                .unwrap();
-
-            // ... aaand get more stuff.
-            let credentials = issuance
-                .clone()
-                .supplement_issuance(
-                    tokens,
-                    2,
-                    None,
-                    signer_factory.clone(),
-                    is_for_pre_authorized_code,
-                )
-                .await
-                .unwrap();
-            let more_credentials = issuance
-                .clone()
-                .supplement_issuance(
-                    credentials.tokens,
-                    3,
-                    None,
-                    signer_factory.clone(),
-                    is_for_pre_authorized_code,
-                )
-                .await
-                .unwrap();
-
-            println!(
-                "got {} and {} more credentials",
-                credentials.credentials.len(),
-                more_credentials.credentials.len(),
-            );
-        }
-
-        async fn get_demo_credential_offer_authorization_code() -> Result<String, ApiError> {
-            // hard coded flow ID in issuer, resulting in a cred offer for a UB-Employee-Badge.
-            let auth_flow_id = "a4ab63cf-3937-4560-93c9-8cca8c5f4531";
-            let cred_offer: CredentialOfferParameters = get_reqwest_client()
-            .build()?
-            .post("https://sprind-eudi-issuer-ws-dev.ubique.ch/gemeinde-musterstadt/c/credential-offer")
-            .json(&json!({"authFlowId": auth_flow_id}))
-            .send()
-            .await?
-            .error_for_status()?
-            .json()
-            .await?;
-
-            let cred_offer: String = serde_json::to_string(&cred_offer)?;
-            let offer = format!(
+            let inline_expected = CredentialOfferParameters {
+                credential_issuer: "https://issuer.example/c1".to_string(),
+                credential_configuration_ids: vec!["example-credential".to_string()],
+                grants: Some(Grants {
+                    authorization_code: Some(AuthorizationCode {
+                        issuer_state: None,
+                        authorization_server: None,
+                    }),
+                    pre_authorized_code: None,
+                }),
+            };
+            let inline_offer = format!(
                 "openid-credential-offer://?{}",
-                serde_urlencoded::to_string([("credential_offer", cred_offer)])?
+                serde_urlencoded::to_string([(
+                    "credential_offer",
+                    serde_json::to_string(&inline_expected).unwrap(),
+                )])
+                .unwrap()
             );
-            Ok(offer)
-        }
 
-        async fn get_demo_credential_offer_preauth() -> Result<String, ApiError> {
-            let cred_offer_request_data = json!({
-              "data": {
-                "schemaIdentifier": {
-                  "credentialIdentifier": "schema-for-testing-s2hx4",
-                  "version": "0.0.1"
-                },
-                "attributes": {
-                  "testAttribut": {
-                    "value": "Test value",
-                    "attributeType": "STRING"
-                  },
-                  "name": {
-                    "value": "Hans Muster",
-                    "attributeType": "STRING"
-                  },
-                  "department": {
-                    "value": "Systems",
-                    "attributeType": "STRING"
-                  },
-                  "dateofbirth": {
-                    "value": "20000102",
-                    "attributeType": "STRING"
-                  }
-                }
-              }
-            })
-            .to_string();
-            let cred_offer_request_token = base64_encode_bytes(
-                &(cred_offer_request_data + ".thissignatureisignored").as_bytes(),
-            );
-            let cred_offer: CredentialOfferParameters = get_reqwest_client()
-            .build()?
-            .post("https://sprind-eudi-issuer-ws-dev.ubique.ch/gemeinde-musterstadt/c/credential-offer")
-            .json(&json!({"token": cred_offer_request_token}))
-            .send()
-            .await?
-            .error_for_status()?
-            .json()
-            .await?;
-
-            let cred_offer: String = serde_json::to_string(&cred_offer)?;
-            let offer = format!(
+            let uri_expected = CredentialOfferParameters {
+                credential_issuer: "https://issuer.example/uri".to_string(),
+                credential_configuration_ids: vec!["example-uri-credential".to_string()],
+                grants: None,
+            };
+            let response_body = serde_json::to_string(&uri_expected).unwrap();
+            let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+            let address = listener.local_addr().unwrap();
+            let server = std::thread::spawn(move || {
+                let (mut stream, _) = listener.accept().unwrap();
+                let mut request = [0; 1024];
+                stream.read(&mut request).unwrap();
+                write!(
+                    stream,
+                    "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
+                    response_body.len(),
+                    response_body
+                )
+                .unwrap();
+            });
+            let uri_offer = format!(
                 "openid-credential-offer://?{}",
-                serde_urlencoded::to_string([("credential_offer", cred_offer)])?
+                serde_urlencoded::to_string([(
+                    "credential_offer_uri",
+                    format!("http://{address}/credential-offer"),
+                )])
+                .unwrap()
             );
-            Ok(offer)
-        }
 
-        #[derive(Clone, Copy, Debug)]
-        pub struct TestSignerFactory {}
-
-        impl SignerFactory for TestSignerFactory {
-            fn new_signer(&self, _key_type: KeyType) -> Arc<dyn NativeSigner> {
-                Arc::new(SoftwareKeyPair::new())
-            }
+            assert!(resolve_credential_offer("", &client).await.is_err());
+            assert_eq!(
+                resolve_credential_offer(&inline_offer, &client)
+                    .await
+                    .unwrap(),
+                inline_expected
+            );
+            assert_eq!(
+                resolve_credential_offer(&uri_offer, &client).await.unwrap(),
+                uri_expected
+            );
+            server.join().unwrap();
         }
     }
 }
