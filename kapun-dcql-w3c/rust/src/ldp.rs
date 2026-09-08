@@ -746,7 +746,7 @@ mod tests {
     ],
     "name": "Open Educational Badges",
     "url": "https://openbadges.education",
-    "email": "annika@mycelia.education"
+    "email": "issuer@example.invalid"
   },
   "validFrom": "2025-12-04T08:37:40.379213+00:00",
   "credentialSubject": {
@@ -825,7 +825,7 @@ mod tests {
     ],
     "name": "Open Educational Badges",
     "url": "https://openbadges.education",
-    "email": "annika@mycelia.education"
+    "email": "issuer@example.invalid"
   },
   "validFrom": "2026-01-15T12:10:16.064699+00:00",
   "credentialSubject": {
