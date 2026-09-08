@@ -22,30 +22,30 @@ package org.kapunsdk.wallet.environment
 
 object EnvironmentController {
 
-	private var environment = EnvironmentType.DEV
+	private var configuration: WalletServiceConfiguration? = null
 
-	fun setEnvironment(environment: EnvironmentType) {
-		EnvironmentController.environment = environment
+	fun setConfiguration(configuration: WalletServiceConfiguration) {
+		EnvironmentController.configuration = configuration
 	}
 
-	fun getHsmBackendUrl() = when (environment) {
-		EnvironmentType.DEV -> "https://sprind-eudi-hsm-connector-ws-dev.ubique.ch/v1"
-		EnvironmentType.PROD -> "https://sprind-eudi-hsm-connector-ws-prod.ubique.ch/v1"
-	}
+	fun getHsmBackendUrl() = configuration().hsmBackendUrl
 
-	fun getHeidiUrl() = when (environment) {
-		EnvironmentType.DEV -> "https://heidi-dev.ubique.ch"
-		EnvironmentType.PROD -> "https://heidi.ubique.ch"
-	}
+	fun getHeidiUrl() = configuration().heidiUrl
 
-	fun getHeidiBackupUrl() = when (environment) {
-		EnvironmentType.DEV -> "https://sprind-eudi-backup-ws-dev.ubique.ch"
-		EnvironmentType.PROD -> "https://sprind-eudi-backup-ws-prod.ubique.ch"
-	}
+	fun getHeidiBackupUrl() = configuration().heidiBackupUrl
 
-	fun getIssuerBackendUrl() = when (environment) {
-		EnvironmentType.DEV -> "https://ssi-issuer-backend-ws-dev.ubique.ch"
-		EnvironmentType.PROD -> "https://ssi-issuer-backend-ws-prod.ubique.ch"
-	}
+	fun getIssuerBackendUrl() = configuration().issuerBackendUrl
+
+	private fun configuration() = configuration ?: error(
+		"Wallet service URLs are not configured. " +
+			"Pass WalletServiceConfiguration to KapunSdk.initialize()."
+	)
 
 }
+
+data class WalletServiceConfiguration(
+	val hsmBackendUrl: String,
+	val heidiUrl: String,
+	val heidiBackupUrl: String,
+	val issuerBackendUrl: String,
+)

@@ -456,7 +456,8 @@ pub(super) fn create_submission(
 
 #[cfg_attr(feature = "uniffi", uniffi::export(async_runtime = "tokio"))]
 #[allow(clippy::unwrap_used, clippy::expect_used)]
-pub async fn start_test_presentation() -> String {
+#[cfg(test)]
+pub async fn start_test_presentation(base_url: String) -> String {
     let data = json!({
         "client_id" : "schnapsladen.ubique.de",
         "nonce": "tests-nonce",
@@ -493,9 +494,8 @@ pub async fn start_test_presentation() -> String {
     });
 
     let client = get_reqwest_client().build().unwrap();
-    const BASE_URL: &str = "https://oid4vp-verifier-ws-dev.ubique.ch";
     let resp = client
-        .post(format!("{BASE_URL}/v1/verifier/par"))
+        .post(format!("{base_url}/v1/verifier/par"))
         .form(&data)
         .send()
         .await
