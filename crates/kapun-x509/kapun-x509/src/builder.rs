@@ -301,8 +301,8 @@ mod tests {
             "CN=Subordinate,O=World domination Inc,C=US",
             Some("CN=World domination corporation,O=World domination Inc,C=US"),
             Some(vec![
-                "https://gdc.heidiverse.rocks",
-                "https://platform-dev.heidiverse.rocks",
+                "https://gdc.example.invalid",
+                "https://platform-dev.example.invalid",
             ]),
             false,
         );
