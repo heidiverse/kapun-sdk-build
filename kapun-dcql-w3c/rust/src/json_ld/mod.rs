@@ -1160,7 +1160,7 @@ mod tests {
                 {
                 "@id": "https://api.openbadges.education/public/issuers/h6VCjbRBR7eC22jwUz45JA?v=3_0",
                 "@type": "https://purl.imsglobal.org/spec/vc/ob/vocab.html#Profile",
-                "https://schema.org/email": "annika@mycelia.education",
+                "https://schema.org/email": "issuer@example.invalid",
                 "https://schema.org/name": "Open Educational Badges",
                 "https://schema.org/url": {
                     "@type": "https://www.w3.org/2001/XMLSchema#anyURI",

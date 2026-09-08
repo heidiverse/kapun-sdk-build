@@ -993,7 +993,7 @@ mod tests {
                 "https://purl.imsglobal.org/spec/vc/ob/vocab.html#Profile"
                 ],
                 "https://schema.org/email": {
-                "@value": "annika@mycelia.education"
+                "@value": "issuer@example.invalid"
                 },
                 "https://schema.org/name": {
                 "@value": "Open Educational Badges"
