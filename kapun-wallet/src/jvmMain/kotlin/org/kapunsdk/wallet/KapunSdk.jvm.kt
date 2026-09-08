@@ -22,13 +22,10 @@ package org.kapunsdk.wallet
 
 import org.kapunsdk.util.log.LogSink
 import org.kapunsdk.util.log.Logger
-import org.kapunsdk.wallet.environment.EnvironmentController
-import org.kapunsdk.wallet.environment.WalletServiceConfiguration
 
 actual class KapunSdk {
-	actual fun initialize(logSink: LogSink?, serviceConfiguration: WalletServiceConfiguration?) {
+	actual fun initialize(logSink: LogSink?) {
 		Logger.sink = logSink
-		serviceConfiguration?.let(EnvironmentController::setConfiguration)
 		bridgeAllRustLogSinks()
 		logKapunSdkInitialized()
 	}

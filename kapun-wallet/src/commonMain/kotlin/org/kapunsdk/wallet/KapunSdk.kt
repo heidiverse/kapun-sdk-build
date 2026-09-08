@@ -1,7 +1,6 @@
 package org.kapunsdk.wallet
 
 import org.kapunsdk.util.log.LogSink
-import org.kapunsdk.wallet.environment.WalletServiceConfiguration
 
 expect class KapunSdk {
 
@@ -9,10 +8,7 @@ expect class KapunSdk {
 	 * @param logSink Receives this SDK's log output; see [org.kapunsdk.util.log.Logger]. When
 	 * null (the default), the SDK logs nothing.
 	 */
-	fun initialize(
-		logSink: LogSink? = null,
-		serviceConfiguration: WalletServiceConfiguration? = null,
-	)
+	fun initialize(logSink: LogSink? = null)
 
 }
 

@@ -39,6 +39,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNames
 import uniffi.kapun_util_rust.Value
+import uniffi.kapun_wallet_rust.WalletBackend
  
 @Serializable
 data class DCRequests @OptIn(ExperimentalSerializationApi::class) constructor(@JsonNames("requests", "providers") val providers: List<DCProvider>) {
@@ -68,6 +69,7 @@ data class DCRequests @OptIn(ExperimentalSerializationApi::class) constructor(@J
 
 class RemotePresentationProcessHandler(
     private val client: HttpClient,
+    private val walletBackend: WalletBackend,
     private val signingProvider: SigningProvider,
     private val trustController: TrustFrameworkController,
     private val identityRepository: IdentityRepository,
@@ -87,6 +89,7 @@ class RemotePresentationProcessHandler(
 			inputEvent is RemotePresentationProcessEvent.PresentationRequested -> {
 				currentProcess = RemotePresentationProcess(
 					client,
+					walletBackend,
 					signingProvider,
 					trustController,
 					identityRepository,

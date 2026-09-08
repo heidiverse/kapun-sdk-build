@@ -27,17 +27,14 @@ import org.kapunsdk.util.log.Logger
 import org.kapunsdk.visualization.KapunVisualization
 import org.kapunsdk.wallet.crypto.factories.HardwareSignerFactory
 import org.kapunsdk.wallet.di.KapunWalletKoinContext
-import org.kapunsdk.wallet.environment.EnvironmentController
-import org.kapunsdk.wallet.environment.WalletServiceConfiguration
 import org.koin.dsl.module
 
 actual class KapunSdk(
 	private val hardwareSignerFactory: HardwareSignerFactory,
 ) {
 
-	actual fun initialize(logSink: LogSink?, serviceConfiguration: WalletServiceConfiguration?) {
+	actual fun initialize(logSink: LogSink?) {
 		Logger.sink = logSink
-		serviceConfiguration?.let(EnvironmentController::setConfiguration)
 		bridgeAllRustLogSinks()
 		KapunTrust().initialize()
 		KapunIssuance().initialize()

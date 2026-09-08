@@ -32,8 +32,10 @@ import org.kapunsdk.wallet.keyvalue.KeyValueRepository
 import org.kapunsdk.wallet.process.ProcessEvent
 import org.kapunsdk.wallet.process.ProcessHandler
 import org.kapunsdk.wallet.process.ProcessStep
+import uniffi.kapun_wallet_rust.WalletBackend
 
 class EaaRefreshProcessHandler(
+	private val walletBackend: WalletBackend,
 	private val trustController: TrustFrameworkController,
 	private val credentialsRepository: CredentialsRepository,
 	private val identityRepository: IdentityRepository,
@@ -54,6 +56,7 @@ class EaaRefreshProcessHandler(
 		return when {
 			inputEvent is EaaRefreshProcessEvent.RefreshRequests -> {
 				currentProcess = EaaRefreshProcess(
+					walletBackend,
 					trustController,
 					credentialsRepository,
 					identityRepository,
