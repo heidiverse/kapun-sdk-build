@@ -200,11 +200,20 @@ mod tests {
             description: None,
             issuer: None,
             credential_subject: Some(Value::Object(HashMap::from([
-                ("type".to_string(), Value::String("CredentialSubject".to_string())),
+                (
+                    "type".to_string(),
+                    Value::String("CredentialSubject".to_string()),
+                ),
                 ("given_name".to_string(), Value::String("John".to_string())),
                 ("family_name".to_string(), Value::String("Doe".to_string())),
-                ("birth_date".to_string(), Value::String("1990-01-01".to_string())),
-                ("course".to_string(), Value::String("Computer Science".to_string())),
+                (
+                    "birth_date".to_string(),
+                    Value::String("1990-01-01".to_string()),
+                ),
+                (
+                    "course".to_string(),
+                    Value::String("Computer Science".to_string()),
+                ),
             ]))),
             valid_from: None,
             valid_until: None,
@@ -214,7 +223,7 @@ mod tests {
             terms_of_use: None,
             evidence: None,
             embedded_proof: None,
-            extensions: None
+            extensions: None,
         };
 
         let signer = Arc::new(SoftwareKeyPair::new());

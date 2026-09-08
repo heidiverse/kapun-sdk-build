@@ -19,13 +19,13 @@ under the License.
  */
 
 use std::sync::{
-    atomic::{AtomicU32, Ordering},
     Arc, Mutex,
+    atomic::{AtomicU32, Ordering},
 };
 
-use aes_gcm::{aead::AeadMut, Aes256Gcm, KeyInit, Nonce};
+use aes_gcm::{Aes256Gcm, KeyInit, Nonce, aead::AeadMut};
 use hkdf::Hkdf;
-use kapun_util_rust::log::{log, LogPriority};
+use kapun_util_rust::log::{LogPriority, log};
 use rand::rngs::OsRng;
 use sha2::{Digest, Sha256};
 
@@ -299,7 +299,7 @@ pub fn decrypt_epoch_iso_180135(
 #[cfg(test)]
 mod tests {
     use crate::iso180135::{
-        decrypt_epoch_iso_180135, encrypt_epoch_iso_180135, EphemeralKey, KeyType, Role,
+        EphemeralKey, KeyType, Role, decrypt_epoch_iso_180135, encrypt_epoch_iso_180135,
     };
 
     #[test]

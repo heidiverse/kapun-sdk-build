@@ -24,7 +24,7 @@ use std::sync::Arc;
 
 #[cfg(feature = "uniffi")]
 use crate::signing::NativeSigner;
-use base64::{prelude::BASE64_URL_SAFE_NO_PAD, Engine};
+use base64::{Engine, prelude::BASE64_URL_SAFE_NO_PAD};
 use ciborium::Value;
 use sha2::Digest;
 

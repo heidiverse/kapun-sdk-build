@@ -19,11 +19,11 @@ under the License.
  */
 
 //! Format agnostic structs for credential handling
+use crate::ApiError;
 use crate::error::{GenericError, InnerError};
 use crate::formats::mdoc::{device_signature, helper};
 use crate::signing::NativeSigner;
 use crate::vc::VerifiableCredential;
-use crate::ApiError;
 use base64::Engine;
 use kapun_util_rust::log::{LogPriority, log};
 use mdoc::helper as mdoc_helper;
@@ -74,19 +74,11 @@ pub fn mdoc_as_json_representation(m: String) -> Option<String> {
         return None;
     };
     let Ok(mut json_map) = mdoc::namespaces_to_json_map(&namespaces, false) else {
-        log(
-            LogPriority::ERROR,
-            "MDOC",
-            "could not map namespaces",
-        );
+        log(LogPriority::ERROR, "MDOC", "could not map namespaces");
         return None;
     };
     let Ok(valid_until) = mdoc::get_valid_until(&deserialized) else {
-        log(
-            LogPriority::ERROR,
-            "MDOC",
-            "could not get valid until",
-        );
+        log(LogPriority::ERROR, "MDOC", "could not get valid until");
         return None;
     };
     json_map["exp"] = serde_json::Value::Number(

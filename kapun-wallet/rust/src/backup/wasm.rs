@@ -20,7 +20,7 @@ under the License.
 
 use wasm_bindgen::JsValue;
 
-use super::{create_backup, reconstruct, Backup};
+use super::{Backup, create_backup, reconstruct};
 
 #[wasm_bindgen::prelude::wasm_bindgen]
 pub fn create_backup_wasm(file: Vec<u8>, number_of_shares: u16) -> Result<JsValue, JsValue> {

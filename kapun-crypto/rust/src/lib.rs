@@ -19,15 +19,15 @@ under the License.
  */
 
 use base64::{
-    prelude::{BASE64_STANDARD, BASE64_STANDARD_NO_PAD, BASE64_URL_SAFE, BASE64_URL_SAFE_NO_PAD},
     Engine,
+    prelude::{BASE64_STANDARD, BASE64_STANDARD_NO_PAD, BASE64_URL_SAFE, BASE64_URL_SAFE_NO_PAD},
 };
 
 pub mod crypto;
 pub mod iso180135;
-pub mod jwx;
 pub mod jws;
 pub mod jwt;
+pub mod jwx;
 
 /// This crate compiles to its own native library, statically linking a private copy of
 /// `kapun_util_rust::log` - registering a sink via `kapun-util`'s own binding only reaches

@@ -21,7 +21,7 @@ use std::fmt::Debug;
 use std::sync::Arc;
 
 //use did_key::{generate, CoreSign, KeyMaterial, P256KeyPair, PatchedKeyPair};
-use p256::ecdsa::{signature::Signer, Signature, SigningKey};
+use p256::ecdsa::{Signature, SigningKey, signature::Signer};
 use rand::rngs::OsRng;
 
 use crate::error::SigningError;

@@ -19,7 +19,7 @@ under the License.
  */
 
 //! Helper functions for the mdoc format
-use anyhow::{ensure, Context};
+use anyhow::{Context, ensure};
 use ciborium::Value;
 
 use crate::ApiError;

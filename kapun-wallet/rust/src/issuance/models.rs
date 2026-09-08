@@ -2,8 +2,8 @@
 use std::{collections::HashMap, sync::Arc};
 
 use base64::{Engine, prelude::BASE64_URL_SAFE_NO_PAD};
-use heidi_jwt::jwt::creator::JwtCreator;
 use heidi_jwt::JwsHeader;
+use heidi_jwt::jwt::creator::JwtCreator;
 use kapun_util_rust::value::Value;
 use reqwest::Url;
 use serde::{Deserialize, Serialize};
