@@ -23,8 +23,6 @@ use std::str::FromStr;
 use std::sync::Arc;
 
 use anyhow::{Context, anyhow};
-use heidi_jwt::jwt::creator::JwtCreator;
-use heidi_jwt::{ES256, JwsAlgorithm, JwsHeader};
 use regex::Regex;
 use reqwest::Url;
 use sdjwt::{ExternalSigner, Holder, SpecVersion};
@@ -456,46 +454,6 @@ pub(super) fn create_submission(
 //     }
 // }
 
-#[cfg_attr(feature = "uniffi", uniffi::export)]
-#[allow(clippy::unwrap_used, clippy::expect_used)]
-/// Create test credentials
-pub fn sign_with_test_issuer_key(kb_public_key: Vec<u8>, json: String) -> String {
-    let pem = br#"-----BEGIN PRIVATE KEY-----
-MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgCpSMiJj/aWKGNlg3
-QDVxPuyj2MJjrfJpObqhmKuzjXWhRANCAARoOdx9P/3Pr9TOyWtvRNnv9gyVEJd9
-eQitkfKWSHR/Sco6Jm/PJkO2ozsMJz5R5k7/+bXVJWll7Lo4xfKij8XI
------END PRIVATE KEY-----"#;
-
-    let signer = ES256.signer_from_der(&pem).unwrap();
-
-    // let issuer = EncodingKey::from_ec_pem(pem).unwrap();
-    let payload = {
-        let mut payload: serde_json::Value =
-            serde_json::from_str(&json).expect("json decoding failed");
-        let public_key =
-            p256::PublicKey::from_sec1_bytes(&kb_public_key).expect("public_key decoding failed");
-        let jwk = public_key.to_jwk();
-
-        payload["cnf"] = json!({
-            "jwk": serde_json::to_value(&jwk).unwrap()
-        });
-        payload["cnf"]["jwk"]["alg"] = serde_json::Value::String("ES256".into());
-        payload
-    };
-    let mut header = JwsHeader::new();
-    header.set_algorithm(ES256.name());
-    header.set_token_type("vc+sd-jwt");
-
-    payload
-        .create_jwt(
-            &header,
-            Some("example-test"),
-            heidi_jwt::chrono::Duration::weeks(52),
-            &Box::new(signer),
-        )
-        .expect("JWT creation failed")
-}
-
 #[cfg_attr(feature = "uniffi", uniffi::export(async_runtime = "tokio"))]
 #[allow(clippy::unwrap_used, clippy::expect_used)]
 pub async fn start_test_presentation() -> String {
@@ -587,8 +545,48 @@ mod tests {
     use std::collections::VecDeque;
 
     use base64::Engine;
+    use heidi_jwt::jwt::creator::JwtCreator;
+    use heidi_jwt::{ES256, JwsAlgorithm, JwsHeader};
+    use serde_json::json;
 
     use super::transform_disclosure_path;
+
+    /// Create test credentials using a test-only issuer key.
+    #[allow(dead_code)]
+    fn sign_with_test_issuer_key(kb_public_key: Vec<u8>, json: String) -> String {
+        use p256::pkcs8::EncodePrivateKey;
+
+        let secret_key = p256::SecretKey::random(&mut rand::rngs::OsRng);
+        let signer = ES256
+            .signer_from_der(secret_key.to_pkcs8_der().unwrap().as_bytes())
+            .unwrap();
+
+        let payload = {
+            let mut payload: serde_json::Value =
+                serde_json::from_str(&json).expect("json decoding failed");
+            let holder_public_key = p256::PublicKey::from_sec1_bytes(&kb_public_key)
+                .expect("public_key decoding failed");
+            let holder_jwk = holder_public_key.to_jwk();
+
+            payload["cnf"] = json!({
+                "jwk": serde_json::to_value(&holder_jwk).unwrap()
+            });
+            payload["cnf"]["jwk"]["alg"] = serde_json::Value::String("ES256".into());
+            payload
+        };
+        let mut header = JwsHeader::new();
+        header.set_algorithm(ES256.name());
+        header.set_token_type("vc+sd-jwt");
+
+        payload
+            .create_jwt(
+                &header,
+                Some("example-test"),
+                heidi_jwt::chrono::Duration::weeks(52),
+                &Box::new(signer),
+            )
+            .expect("JWT creation failed")
+    }
 
     #[test]
     fn test_transform() {
