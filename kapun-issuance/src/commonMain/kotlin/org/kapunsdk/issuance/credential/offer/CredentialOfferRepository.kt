@@ -20,7 +20,7 @@ under the License.
 
 package org.kapunsdk.issuance.credential.offer
 
-import org.kapunsdk.issuance.di.HeidiIssuanceKoinComponent
+import org.kapunsdk.issuance.di.KapunIssuanceKoinComponent
 import io.ktor.http.Url
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -28,7 +28,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import org.koin.core.component.inject
 
-class CredentialOfferRepository : HeidiIssuanceKoinComponent {
+class CredentialOfferRepository : KapunIssuanceKoinComponent {
 
 	companion object {
 		private const val CREDENTIAL_OFFER_SCHEME = "openid-credential-offer"

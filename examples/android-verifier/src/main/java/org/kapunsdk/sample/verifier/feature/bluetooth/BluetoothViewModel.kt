@@ -217,7 +217,7 @@ class BluetoothViewModel(
 
 			//TODO: we need to create the correct presentation request:
 			// - Use the correct clientID (e.g. did:...)
-			// - Sign the presentation request with heidi_crypto or similiar (JWT use key from clientId resolution)
+			// - Sign the presentation request with kapun-crypto or similar (JWT use key from clientId resolution)
 			// - Add potentially needed client_metadata (maybe not needed)
 			var presentationRequest = PresentationRequest(
 				clientId = "x509_san_dns:example.com",

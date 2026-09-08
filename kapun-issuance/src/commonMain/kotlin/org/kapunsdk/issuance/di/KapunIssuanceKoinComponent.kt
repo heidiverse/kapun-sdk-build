@@ -19,21 +19,8 @@ under the License.
  */
 package org.kapunsdk.issuance.di
 
-import org.koin.core.Koin
-import org.koin.core.KoinApplication
-import org.koin.dsl.koinApplication
+import org.koin.core.component.KoinComponent
 
-internal object HeidiIssuanceKoinContext {
-
-	private lateinit var koinApp: KoinApplication
-	lateinit var koin: Koin
-
-	fun initialize(appConfiguration: KoinApplication.() -> Unit = {}) {
-		koinApp = koinApplication {
-			issuanceModules()
-			appConfiguration()
-		}
-		koin = koinApp.koin
-	}
-
+internal interface KapunIssuanceKoinComponent : KoinComponent {
+	override fun getKoin() = KapunIssuanceKoinContext.koin
 }

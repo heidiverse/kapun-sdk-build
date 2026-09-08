@@ -22,7 +22,7 @@ package org.kapunsdk.util.log
 class Logger(val tag: String) {
 
 	companion object {
-		private const val DEFAULT_TAG = "Heidi"
+		private const val DEFAULT_TAG = "Kapun"
 
 		/**
 		 * When null (the default), SDK log calls produce no output at all. Set this once, at

@@ -30,7 +30,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.Fragment
-import org.kapunsdk.sample.wallet.compose.theme.HeidiTheme
+import org.kapunsdk.sample.wallet.compose.theme.KapunTheme
 import org.kapunsdk.sample.wallet.databinding.FragmentComposeBinding
 import org.kapunsdk.sample.wallet.feature.scanner.QrScannerScreenCallbacks
 import org.kapunsdk.sample.wallet.feature.scanner.QrScannerViewModel
@@ -81,7 +81,7 @@ class ProximityFragment : Fragment(), KoinComponent {
 		)
 
 		binding.composeView.setContent {
-			HeidiTheme {
+			KapunTheme {
 				ProximityScreen(
 					proximityState = viewModel.proximityState.collectAsState(),
 					qrScannerViewModel = qrScannerViewModel,

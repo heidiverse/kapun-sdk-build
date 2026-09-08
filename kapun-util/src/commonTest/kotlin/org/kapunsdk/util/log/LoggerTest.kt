@@ -74,10 +74,10 @@ class LoggerTest {
 		Logger.error("e")
 
 		assertEquals(4, sink.recorded.size)
-		assertEquals(RecordedLog(LogSeverity.DEBUG, "Heidi", "d", null), sink.recorded[0])
-		assertEquals(RecordedLog(LogSeverity.INFO, "Heidi", "i", null), sink.recorded[1])
-		assertEquals(RecordedLog(LogSeverity.WARN, "Heidi", "w", null), sink.recorded[2])
-		assertEquals(RecordedLog(LogSeverity.ERROR, "Heidi", "e", null), sink.recorded[3])
+		assertEquals(RecordedLog(LogSeverity.DEBUG, "Kapun", "d", null), sink.recorded[0])
+		assertEquals(RecordedLog(LogSeverity.INFO, "Kapun", "i", null), sink.recorded[1])
+		assertEquals(RecordedLog(LogSeverity.WARN, "Kapun", "w", null), sink.recorded[2])
+		assertEquals(RecordedLog(LogSeverity.ERROR, "Kapun", "e", null), sink.recorded[3])
 	}
 
 	@Test

@@ -96,7 +96,7 @@ class ProximityVerifierViewModel(
 	private val verifier = ProximityVerifier.create(
 		ProximityProtocol.OPENID4VP,
 		viewModelScope,
-		"Heidi Sample Verifier",
+		"Kapun Sample Verifier",
 		requester
 	)
 

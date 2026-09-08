@@ -1,4 +1,4 @@
-/* Copyright 2024 Ubique Innovation AG
+/* Copyright 2025 Ubique Innovation AG
 
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
@@ -15,12 +15,17 @@ software distributed under the License is distributed on an
 "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
-under the License.   
+under the License.
  */
-package org.kapunsdk.issuance.di
 
-import org.koin.core.component.KoinComponent
+package org.kapunsdk.issuance
 
-internal interface HeidiIssuanceKoinComponent : KoinComponent {
-	override fun getKoin() = HeidiIssuanceKoinContext.koin
+import org.kapunsdk.issuance.di.KapunIssuanceKoinContext
+
+actual class KapunIssuance {
+
+	actual fun initialize() {
+		KapunIssuanceKoinContext.initialize()
+	}
+
 }

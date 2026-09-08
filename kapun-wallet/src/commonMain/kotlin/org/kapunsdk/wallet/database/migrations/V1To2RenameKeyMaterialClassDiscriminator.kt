@@ -26,7 +26,7 @@ import org.kapunsdk.credentials.models.metadata.KeyMaterial
 
 /**
  * This migration renames the class discriminator field for the serialized [KeyMaterial] sealed class in the credential entity.
- * This is required because the [KeyMaterial] file was moved from the heidi-wallet module to the heidi-credentials module.
+ * This is required because the [KeyMaterial] file was moved from the kapun-wallet module to the kapun-credentials module.
  * By default, KotlinX Serialization uses the fully qualified class name as the class discriminator, which is different after a package move.
  *
  * Note: Do NOT run migrations in a transaction, since the NativeSqliteDriver runs them in a transaction anyway and causes the migration to fail.
@@ -63,4 +63,3 @@ internal val V1To2RenameKeyMaterialClassDiscriminator = AfterVersion(1) { driver
 		}
 	}
 }
-

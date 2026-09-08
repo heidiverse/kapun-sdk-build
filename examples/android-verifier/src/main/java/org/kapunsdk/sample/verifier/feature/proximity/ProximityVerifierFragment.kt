@@ -27,7 +27,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.Fragment
-import org.kapunsdk.sample.verifier.compose.theme.HeidiTheme
+import org.kapunsdk.sample.verifier.compose.theme.KapunTheme
 import org.kapunsdk.sample.verifier.databinding.FragmentComposeBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
@@ -77,7 +77,7 @@ class ProximityVerifierFragment : Fragment(), KoinComponent {
 		)
 
 		binding.composeView.setContent {
-			HeidiTheme {
+			KapunTheme {
 				ProximityVerifierScreen(
 					proofTemplate = viewModel.proofTemplate.collectAsState(),
 					proximityState = viewModel.proximityState.collectAsState(),

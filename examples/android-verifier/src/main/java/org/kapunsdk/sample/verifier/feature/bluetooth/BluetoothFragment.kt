@@ -30,7 +30,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.Fragment
-import org.kapunsdk.sample.verifier.compose.theme.HeidiTheme
+import org.kapunsdk.sample.verifier.compose.theme.KapunTheme
 import org.kapunsdk.sample.verifier.databinding.FragmentComposeBinding
 import org.kapunsdk.sample.verifier.feature.scanner.QrScannerScreenCallbacks
 import org.kapunsdk.sample.verifier.feature.scanner.QrScannerViewModel
@@ -79,7 +79,7 @@ class BluetoothFragment : Fragment() {
 			)
 		)
 		binding.composeView.setContent {
-			HeidiTheme {
+			KapunTheme {
 				BluetoothScreen(
 					state = viewModel.bluetoothState.collectAsState(),
 					log = viewModel.bluetoothLog.collectAsState(),
