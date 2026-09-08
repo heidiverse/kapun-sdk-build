@@ -27,12 +27,15 @@ import org.kapunsdk.util.log.LogSink
 import org.kapunsdk.util.log.Logger
 import org.kapunsdk.visualization.KapunVisualization
 import org.kapunsdk.wallet.di.KapunWalletKoinContext
+import org.kapunsdk.wallet.environment.EnvironmentController
+import org.kapunsdk.wallet.environment.WalletServiceConfiguration
 import org.koin.android.ext.koin.androidContext
 
 actual class KapunSdk(private val context: Context) {
 
-	actual fun initialize(logSink: LogSink?) {
+	actual fun initialize(logSink: LogSink?, serviceConfiguration: WalletServiceConfiguration?) {
 		Logger.sink = logSink
+		serviceConfiguration?.let(EnvironmentController::setConfiguration)
 		bridgeAllRustLogSinks()
 		KapunTrust(context).initialize()
 		KapunIssuance(context).initialize()
