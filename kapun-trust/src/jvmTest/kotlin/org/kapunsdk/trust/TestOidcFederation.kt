@@ -16,18 +16,21 @@ import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
+@Ignore("requires KAPUN_OIDF_TEST_ISSUER and a running OIDC federation service")
 class TestOidcFederation {
 
     suspend fun getIssuerInformationZVV(
 		framework: OidcFederationTrustFramerwork,
 	    credentialConfigurationIds: List<String> = listOf("zvv-memberkarte-a6thx-1.2.0-sd-jwt")
     ): AgentInformation? {
+        val issuer = System.getenv("KAPUN_OIDF_TEST_ISSUER")
+            ?: error("KAPUN_OIDF_TEST_ISSUER must be set for OIDC federation integration tests")
         return framework.getIssuerInformation(
-            "https://heidi-issuer-ws-dev.ubique.ch/zvv/c",
+            issuer,
             credentialConfigurationIds,
             CredentialIssuerMetadata.Unsigned(
 	            CredentialIssuerMetadataClaims(
-					credentialIssuer = "https://heidi-issuer-ws-dev.ubique.ch/zvv/c",
+					credentialIssuer = issuer,
 					credentialEndpoint = "",
 					credentialConfigurationsSupported = mapOf()
 				)

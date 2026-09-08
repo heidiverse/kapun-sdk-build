@@ -1151,12 +1151,14 @@ pub(crate) mod test_hsm {
     #[allow(unused)]
     pub fn new_testing_hsm() -> Arc<Hsm> {
         let stuff = Arc::new(Stuff(SigningKey::random(&mut OsRng)));
+        let base_url = std::env::var("KAPUN_HSM_TEST_URL")
+            .expect("KAPUN_HSM_TEST_URL must be set for HSM integration tests");
 
         Arc::new(Hsm::new(
             stuff.clone(),
             stuff.clone(),
             stuff.clone(),
-            "https://sprind-eudi-hsm-connector-ws-dev.ubique.ch/v1".to_string(),
+            base_url,
         ))
     }
 
@@ -1169,6 +1171,7 @@ pub(crate) mod test_hsm {
     }
 
     #[tokio::test]
+    #[ignore = "requires KAPUN_HSM_TEST_URL and a running HSM service"]
     async fn test_wallet_attestation() {
         test_wallet_attestation_helper().await;
     }
@@ -1187,9 +1190,12 @@ pub(crate) mod test_hsm {
             .clone();
 
         let client_id = "c3ce7a6c-2bbb-4abe-909c-41bc9463d3c5";
-        let issuer = "https://demo.pid-issuer.bundesdruckerei.de/c1";
+        let issuer = std::env::var("KAPUN_OIDC_TEST_ISSUER")
+            .expect("KAPUN_OIDC_TEST_ISSUER must be set for HSM integration tests");
+        let redirect_uri = std::env::var("KAPUN_OIDC_TEST_REDIRECT_URI")
+            .expect("KAPUN_OIDC_TEST_REDIRECT_URI must be set for HSM integration tests");
         let pop = hsm
-            .generate_pop(client_id.to_string(), issuer.to_string(), None)
+            .generate_pop(client_id.to_string(), issuer.clone(), None)
             .await
             .unwrap();
 
@@ -1198,7 +1204,7 @@ pub(crate) mod test_hsm {
         let par = PushedAuthorizationRequest {
             response_type: "code".to_string(),
             client_id: client_id.to_string(),
-            redirect_uri: Some("https://heidi.ubique.ch".to_string()),
+            redirect_uri: Some(redirect_uri),
             scope: Some("pid".to_string()),
             state: None,
             code_challenge: Some(code_challenge),
@@ -1212,9 +1218,7 @@ pub(crate) mod test_hsm {
         let client = ClientBuilder::new(get_reqwest_client().build().unwrap()).build();
         let par_request = build_pushed_authorization_request(
             &client,
-            "https://demo.pid-issuer.bundesdruckerei.de/c1/par"
-                .parse()
-                .unwrap(),
+            format!("{issuer}/par").parse().unwrap(),
             par,
             Some(client_attestation),
         )
@@ -1229,6 +1233,7 @@ pub(crate) mod test_hsm {
     }
 
     #[tokio::test]
+    #[ignore = "requires KAPUN_HSM_TEST_URL and a running HSM service"]
     async fn test_batch_keys() {
         let hsm = new_testing_hsm();
         let _ = hsm.register().await.unwrap();
@@ -1243,6 +1248,7 @@ pub(crate) mod test_hsm {
     }
 
     #[tokio::test]
+    #[ignore = "requires KAPUN_HSM_TEST_URL and a running HSM service"]
     async fn test_batch_sign() {
         let hsm = new_testing_hsm();
         let _ = hsm.register().await.unwrap();
@@ -1263,6 +1269,7 @@ pub(crate) mod test_hsm {
     }
 
     #[tokio::test]
+    #[ignore = "requires KAPUN_HSM_TEST_URL and a running HSM service"]
     async fn test_batch_key_sign_one() {
         let hsm = new_testing_hsm();
         let _ = hsm.register().await.unwrap();
@@ -1302,6 +1309,7 @@ pub(crate) mod test_hsm {
     }
 
     #[tokio::test]
+    #[ignore = "requires KAPUN_HSM_TEST_URL and a running HSM service"]
     async fn test_change_pin() {
         #[derive(Debug)]
         struct NewPin;

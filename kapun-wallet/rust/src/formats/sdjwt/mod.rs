@@ -334,7 +334,7 @@ mod sd_jwt_test {
               "name": "VCT sd-jwt",
               "filter": {
                 "enum": [
-                  "https://heidi-entity-ws-dev.ubique.ch/public/v1/schema/format-specific-test-l8dbo/2.0.0"
+                  "https://example.invalid/schemas/format-specific-test-l8dbo/2.0.0"
                 ],
                 "type": "string"
               },

@@ -687,7 +687,6 @@ impl FrostHsm {
             "userDeviceSignedNonce" : user_device_signed_nonce,
             "keyNonce" : key_nonce
         });
-        //https://sprind-eudi-hsm-connector-ws-dev.ubique.ch/v1
         let result = self
             .client
             .post(format!("{}/register/frost/finalize", self.base_url))
@@ -965,6 +964,7 @@ mod test {
     }
 
     #[tokio::test]
+    #[ignore = "requires KAPUN_HSM_TEST_URL and a running HSM service"]
     async fn test_hsm() {
         let mut frost_signer = FrostSigner::new(3, 3, "test@example.ch".to_string()).unwrap();
         let passphrase = frost_signer.pass_phrase_part.pass_phrase.take().unwrap();
@@ -978,8 +978,10 @@ mod test {
         }
 
         let frost_signer = Arc::new(frost_signer);
+        let base_url = std::env::var("KAPUN_HSM_TEST_URL")
+            .expect("KAPUN_HSM_TEST_URL must be set for FROST integration tests");
         let frost_hsm = Arc::new(FrostHsm::new(
-            "https://sprind-eudi-hsm-connector-ws-dev.ubique.ch/v1".to_string(),
+            base_url,
             "test@example.ch".to_string(),
             Arc::new(Passphraser(passphrase)),
             frost_signer,

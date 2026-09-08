@@ -363,10 +363,10 @@ mod test {
 #[test]
 fn test_presentation_parse() {
     let auth_request = r#"{
-  "response_uri": "https://oid4vp-verifier-ws-dev.ubique.ch/v1/wallet/authorization",
+  "response_uri": "https://example.invalid/verifier/wallet/authorization",
   "aud": "https://self-issued.me/v2",
   "client_id_scheme": "x509_san_dns",
-  "iss": "funke.ubique.ch",
+  "iss": "https://example.invalid/verifier",
   "response_type": "vp_token",
   "presentation_definition": {
     "id": "42e01950-e575-436e-836b-968338fff8f7",

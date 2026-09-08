@@ -277,13 +277,18 @@ mod test_backend {
         });
     }
 
+    fn test_backend() -> WalletBackend {
+        let base_url = std::env::var("KAPUN_HSM_TEST_URL")
+            .expect("KAPUN_HSM_TEST_URL must be set for backend integration tests");
+        WalletBackend::new(base_url)
+    }
+
     #[tokio::test]
+    #[ignore = "requires KAPUN_HSM_TEST_URL and a running HSM service"]
     async fn test_wallet_attestation() {
         setup_proxy();
 
-        let backend = Arc::new(WalletBackend::new(
-            "https://sprind-eudi-hsm-connector-ws-dev.ubique.ch/v1".to_string(),
-        ));
+        let backend = Arc::new(test_backend());
 
         let key = new_native_signer();
 
@@ -330,12 +335,11 @@ mod test_backend {
     }
 
     #[tokio::test]
+    #[ignore = "requires KAPUN_HSM_TEST_URL and a running HSM service"]
     async fn test_key_attestation() {
         setup_proxy();
 
-        let backend = Arc::new(WalletBackend::new(
-            "https://sprind-eudi-hsm-connector-ws-dev.ubique.ch/v1".to_string(),
-        ));
+        let backend = Arc::new(test_backend());
 
         let issuer_c_nonce = "fnord".to_string();
         let audience = "https://example.com/issuer/c".to_string();

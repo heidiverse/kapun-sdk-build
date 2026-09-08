@@ -192,7 +192,7 @@ mod tests {
         let data = W3CVerifiableCredential {
             context: vec![
                 Value::String("https://www.w3.org/ns/credentials/v2".to_string()),
-                Value::String("https://heidi-entity-ws-dev.ubique.ch/public/v2/schema/master-diplom-mirfc/1.1.0/context".to_string()),
+                Value::String("https://example.invalid/open-badges/context".to_string()),
             ],
             id: None,
             types: vec![],
