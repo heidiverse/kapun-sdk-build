@@ -22,7 +22,7 @@ use std::sync::Arc;
 
 use base64::Engine;
 use heidi_jwt::models::errors::JwsError;
-use p256::ecdsa::{signature::Signer, Signature, SigningKey};
+use p256::ecdsa::{Signature, SigningKey, signature::Signer};
 use rand::rngs::OsRng;
 use sha2::{Digest, Sha256};
 

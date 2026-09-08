@@ -2710,10 +2710,8 @@ mod issuance {
 
         #[tokio::test]
         async fn test_resolve_credential_offer() {
-            let client = ClientBuilder::new(
-                reqwest::Client::builder().no_proxy().build().unwrap(),
-            )
-            .build();
+            let client =
+                ClientBuilder::new(reqwest::Client::builder().no_proxy().build().unwrap()).build();
 
             let inline_expected = CredentialOfferParameters {
                 credential_issuer: "https://issuer.example/c1".to_string(),

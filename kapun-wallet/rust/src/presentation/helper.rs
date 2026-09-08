@@ -29,16 +29,16 @@ use sdjwt::{ExternalSigner, Holder, SpecVersion};
 use serde::Deserialize;
 use serde_json::{Value, json};
 
+use crate::ApiError;
 #[cfg(feature = "reqwest")]
 use crate::agents::{AgentInfo, AgentType};
 #[cfg(all(feature = "reqwest", feature = "oid4vp"))]
 use crate::get_reqwest_client;
-use kapun_crypto_rust::jwx::EncryptionParameters;
 use crate::presentation::presentation_exchange::{
     AuthorizationRequest, ClientIdScheme, ClientMetadataResource, PresentationDefinition,
 };
 use crate::vc::PresentableCredential;
-use crate::ApiError;
+use kapun_crypto_rust::jwx::EncryptionParameters;
 use kapun_util_rust::{log_debug, log_warn};
 
 /// Wrap AuthorizationRequest and AgentInfo into one struct

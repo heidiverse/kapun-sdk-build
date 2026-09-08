@@ -25,11 +25,11 @@ under the License.
 
 use crate::get_default_client;
 use crate::unix_timestamp;
-use rand::distributions::{Alphanumeric, Distribution};
 use rand::Rng;
+use rand::distributions::{Alphanumeric, Distribution};
 use rand_distr::Poisson;
 use reqwest::{Client, Method};
-use serde_json::{json, Value};
+use serde_json::{Value, json};
 use std::collections::HashMap;
 use std::sync::Arc;
 use std::time::Duration;

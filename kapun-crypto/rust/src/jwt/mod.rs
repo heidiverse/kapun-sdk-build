@@ -22,21 +22,21 @@ use std::str::FromStr;
 
 use crate::crypto::{
     base58btc_decode, base64_url_decode,
-    x509::{extract_certs, X509Certificate},
+    x509::{X509Certificate, extract_certs},
 };
 use base64::{
-    prelude::{BASE64_STANDARD, BASE64_URL_SAFE_NO_PAD},
     Engine,
+    prelude::{BASE64_STANDARD, BASE64_URL_SAFE_NO_PAD},
 };
 use heidi_jwt::{
-    jwt::{
-        ec_verifier_from_sec1, verifier::DefaultVerifier, verifier_for_der, verifier_for_jwk, Jwt,
-        JwtVerifier,
-    },
     Jwk, JwsHeader,
+    jwt::{
+        Jwt, JwtVerifier, ec_verifier_from_sec1, verifier::DefaultVerifier, verifier_for_der,
+        verifier_for_jwk,
+    },
 };
 use kapun_util_rust::{log_error, log_warn, value::Value};
-use serde::{de::DeserializeOwned, Deserialize, Serialize};
+use serde::{Deserialize, Serialize, de::DeserializeOwned};
 use serde_json::Map;
 
 #[uniffi::export]

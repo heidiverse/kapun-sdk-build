@@ -18,19 +18,19 @@ specific language governing permissions and limitations
 under the License.
  */
 
+use crate::ApiError;
 use crate::error::SigningError;
 use crate::get_reqwest_client;
 use crate::hsm::{build_wallet_attestation_pop, format_wallet_attestation_pop};
 use crate::signing::NativeSigner;
 use crate::util::generate_uuid_v4;
-use crate::ApiError;
 use anyhow::anyhow;
-use base64::{prelude::BASE64_URL_SAFE_NO_PAD, Engine};
+use base64::{Engine, prelude::BASE64_URL_SAFE_NO_PAD};
 use reqwest_middleware::{ClientBuilder, ClientWithMiddleware};
-use reqwest_retry::policies::ExponentialBackoff;
 use reqwest_retry::RetryTransientMiddleware;
+use reqwest_retry::policies::ExponentialBackoff;
 use serde::{Deserialize, Serialize};
-use serde_json::{json, Value};
+use serde_json::{Value, json};
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 

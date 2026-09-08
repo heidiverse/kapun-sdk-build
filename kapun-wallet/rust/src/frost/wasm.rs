@@ -1,4 +1,3 @@
-
 /* Copyright 2024 Ubique Innovation AG
 
 Licensed to the Apache Software Foundation (ASF) under one

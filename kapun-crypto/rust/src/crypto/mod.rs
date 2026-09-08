@@ -20,7 +20,7 @@ under the License.
 
 //! Exposing some utilities for encoding/decoding, signing and hashing.
 
-use base64::{prelude::BASE64_URL_SAFE, prelude::BASE64_URL_SAFE_NO_PAD, Engine};
+use base64::{Engine, prelude::BASE64_URL_SAFE, prelude::BASE64_URL_SAFE_NO_PAD};
 
 use crate::SigningError;
 use sha2::Digest;
