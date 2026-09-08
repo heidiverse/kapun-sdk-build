@@ -21,7 +21,7 @@ under the License.
 package org.kapunsdk.issuance.metadata
 
 import org.kapunsdk.issuance.credential.offer.CredentialOfferParameters
-import org.kapunsdk.issuance.di.HeidiIssuanceKoinComponent
+import org.kapunsdk.issuance.di.KapunIssuanceKoinComponent
 import org.kapunsdk.issuance.metadata.data.CredentialIssuerMetadata
 import org.kapunsdk.issuance.metadata.data.CredentialIssuerMetadataClaims
 import kotlinx.coroutines.Dispatchers
@@ -30,7 +30,7 @@ import kotlinx.coroutines.withContext
 import org.kapunsdk.util.extensions.transform
 import org.koin.core.component.inject
 
-class MetadataRepository: HeidiIssuanceKoinComponent {
+class MetadataRepository: KapunIssuanceKoinComponent {
 
 	private val metadataService by inject<MetadataService>()
 

@@ -21,14 +21,14 @@ under the License.
 package org.kapunsdk.issuance
 
 import android.content.Context
-import org.kapunsdk.issuance.di.HeidiIssuanceKoinContext
+import org.kapunsdk.issuance.di.KapunIssuanceKoinContext
 
 import org.koin.android.ext.koin.androidContext
 
 actual class KapunIssuance(private val context: Context) {
 
 	actual fun initialize() {
-		HeidiIssuanceKoinContext.initialize {
+		KapunIssuanceKoinContext.initialize {
 			androidContext(context)
 		}
 	}

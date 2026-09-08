@@ -338,7 +338,6 @@ mod test {
     //     let link = "openid4vp://?request_uri=https%3A%2F%2Ffunke.animo.id%2Fsiop%2Fc01ea0f3-34df-41d5-89d1-50ef3d181855%2Fauthorization-requests%2F59d127bc-de50-4caf-9f49-341d3065765d";
     //     //let link = "openid4vp://?request_uri=https://10.122.150.225/wallet/request.jwt/s66vCeCkUv5ieSi1nMMM8GIxLf3h4OxF2T3sFelzNT_4mvhb_OS--G0z45MD-rODI_ry6vqeg9w-hvBBfYcIQg";
     //     let link = "openid4vp://?request_uri=https%3A%2F%2Ffunke.animo.id%2Fsiop%2Fc01ea0f3-34df-41d5-89d1-50ef3d181855%2Fauthorization-requests%2F1dc588a4-3da4-4fa2-8217-f6adcc26e961";
-    //     let link = "openid4vp://?request_uri=https://demo.certification.openid.net/test/a/heidi-wallet/requesturi/F7uiPGqczMCJnl0M2yh8pvcQhIWcmYJdMseFYR78uII3NAlgWeBSUkBZBtzIkjld%23ba1xxXsD5HKgqmkDxZfgNUZHJnTnxFwT_Okf7NRECqo&client_id=demo.certification.openid.net";
     //     UNSAFE_TLS.store(true, std::sync::atomic::Ordering::Relaxed);
     //     #[derive(Debug)]
     //     struct Store;
