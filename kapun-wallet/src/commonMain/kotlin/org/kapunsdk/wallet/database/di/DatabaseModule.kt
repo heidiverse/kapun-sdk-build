@@ -28,8 +28,8 @@ import org.kapunsdk.wallet.database.SqliteDriverFactory
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-internal fun databaseModule() = module {
-	sqliteDriverModule()
+internal fun databaseModule(databaseName: String) = module {
+	sqliteDriverModule(databaseName)
 	single {
 		KapunDatabase(
 			driver = get<SqliteDriverFactory>().createDriver(),
@@ -44,4 +44,4 @@ internal fun databaseModule() = module {
 	}
 }
 
-internal expect fun Module.sqliteDriverModule()
+internal expect fun Module.sqliteDriverModule(databaseName: String)

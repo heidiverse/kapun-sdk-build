@@ -24,12 +24,11 @@ import android.content.Context
 import org.kapunsdk.wallet.database.AndroidSqliteDriverFactory
 import org.kapunsdk.wallet.database.SqliteDriverFactory
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 
-actual fun Module.sqliteDriverModule() {
-	singleOf(::create).bind<SqliteDriverFactory>()
+actual fun Module.sqliteDriverModule(databaseName: String) {
+	single { create(get(), databaseName) }.bind<SqliteDriverFactory>()
 }
-internal fun create(context: Context) : AndroidSqliteDriverFactory {
-	return AndroidSqliteDriverFactory(context, "heidi_database.sqlite")
+internal fun create(context: Context, databaseName: String): AndroidSqliteDriverFactory {
+	return AndroidSqliteDriverFactory(context, databaseName)
 }

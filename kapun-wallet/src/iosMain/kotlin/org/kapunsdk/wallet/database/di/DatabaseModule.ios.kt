@@ -23,9 +23,8 @@ package org.kapunsdk.wallet.database.di
 import org.kapunsdk.wallet.database.IosSqliteDriverFactory
 import org.kapunsdk.wallet.database.SqliteDriverFactory
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 
-actual fun Module.sqliteDriverModule() {
-	singleOf(::IosSqliteDriverFactory).bind<SqliteDriverFactory>()
+actual fun Module.sqliteDriverModule(databaseName: String) {
+	single { IosSqliteDriverFactory(databaseName) }.bind<SqliteDriverFactory>()
 }

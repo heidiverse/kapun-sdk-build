@@ -31,13 +31,13 @@ import org.koin.android.ext.koin.androidContext
 
 actual class KapunSdk(private val context: Context) {
 
-	actual fun initialize(logSink: LogSink?) {
+ actual fun initialize(logSink: LogSink?, databaseName: String) {
 		Logger.sink = logSink
 		bridgeAllRustLogSinks()
 		KapunTrust(context).initialize()
 		KapunIssuance(context).initialize()
 		KapunVisualization(context).initialize()
-		KapunWalletKoinContext.initialize {
+		KapunWalletKoinContext.initialize(databaseName) {
 			androidContext(context)
 		}
 		logKapunSdkInitialized()

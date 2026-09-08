@@ -24,7 +24,7 @@ import org.kapunsdk.util.log.LogSink
 import org.kapunsdk.util.log.Logger
 
 actual class KapunSdk {
-	actual fun initialize(logSink: LogSink?) {
+	actual fun initialize(logSink: LogSink?, databaseName: String) {
 		Logger.sink = logSink
 		bridgeAllRustLogSinks()
 		logKapunSdkInitialized()
