@@ -2984,7 +2984,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "39cab71617ae0d63f51a36d69f866391735b51691dbda63cf6f96d042b63efeb"
 dependencies = [
  "libc",
- "windows-sys 0.61.2",
+ "windows-sys 0.59.0",
 ]
 
 [[package]]
@@ -3831,7 +3831,22 @@ dependencies = [
  "chrono",
  "itertools 0.14.0",
  "josekit",
- "kapun-x509 0.1.0 (git+https://github.com/KapunSDK/kapun-sdk.git)",
+ "kapun-x509 0.1.0 (git+https://github.com/heidiverse/kapun-sdk.git)",
+ "serde",
+ "serde_json",
+ "tracing",
+]
+
+[[package]]
+name = "heidi-jwt"
+version = "0.1.2"
+source = "git+https://github.com/heidiverse/heidi-jwt#8c550e6886ba99920b7985efacb8e94813aec0e9"
+dependencies = [
+ "base64 0.22.1",
+ "chrono",
+ "itertools 0.14.0",
+ "josekit",
+ "kapun-x509 0.1.0 (git+https://github.com/heidiverse/kapun-sdk.git)",
  "serde",
  "serde_json",
  "tracing",
@@ -4750,7 +4765,7 @@ dependencies = [
  "getrandom 0.3.4",
  "hmac 0.13.0",
  "k256",
- "kapun-crypto-provider 0.1.0 (git+https://github.com/KapunSDK/kapun-sdk.git?branch=feature%2Fcrypto-provider)",
+ "kapun-crypto-provider 0.1.0 (git+https://github.com/heidiverse/kapun-sdk.git?branch=feature%2Fcrypto-provider)",
  "ml-dsa",
  "p256 0.13.2",
  "p384",
@@ -5082,6 +5097,14 @@ dependencies = [
 [[package]]
 name = "kapun-crypto-provider"
 version = "0.1.0"
+source = "git+https://github.com/heidiverse/kapun-sdk.git?branch=feature%2Fcrypto-provider#bd6f33c3c1459ef429ac8b668fa950699fcbf8d3"
+dependencies = [
+ "oid-registry",
+]
+
+[[package]]
+name = "kapun-crypto-provider"
+version = "0.1.0"
 source = "git+https://github.com/KapunSDK/kapun-sdk.git?branch=feature%2Fcrypto-provider#bd6f33c3c1459ef429ac8b668fa950699fcbf8d3"
 dependencies = [
  "oid-registry",
@@ -5096,7 +5119,7 @@ dependencies = [
  "blake3",
  "ciborium",
  "ed25519-dalek 2.2.0",
- "heidi-jwt",
+ "heidi-jwt 0.1.2 (git+https://github.com/heidiverse/heidi-jwt)",
  "hkdf 0.12.4",
  "josekit",
  "kapun-util-rust",
@@ -5222,7 +5245,7 @@ name = "kapun-issuance-rust"
 version = "0.1.0"
 dependencies = [
  "base64 0.22.1",
- "heidi-jwt",
+ "heidi-jwt 0.1.2 (git+https://github.com/heidiverse/heidi-jwt)",
  "kapun-crypto-rust",
  "kapun-util-rust",
  "reqwest 0.11.27",
@@ -5261,7 +5284,7 @@ name = "kapun-trust-rust"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "heidi-jwt",
+ "heidi-jwt 0.1.2 (git+https://github.com/heidiverse/heidi-jwt)",
  "josekit",
  "kapun-util-rust",
  "openidconnect-federation",
@@ -5309,7 +5332,7 @@ dependencies = [
  "ed25519-dalek 2.2.0",
  "elliptic-curve 0.13.8",
  "frost-ed25519",
- "heidi-jwt",
+ "heidi-jwt 0.1.2 (git+https://github.com/heidiverse/heidi-jwt)",
  "hex",
  "hkdf 0.12.4",
  "http 0.2.12",
@@ -5393,15 +5416,18 @@ dependencies = [
 [[package]]
 name = "kapun-x509"
 version = "0.1.0"
-source = "git+https://github.com/KapunSDK/kapun-sdk.git#476effa11e26edc44410c1414f67d20ee6e77239"
+source = "git+https://github.com/heidiverse/kapun-sdk.git#2c71aad0df2f5f3ec7e8c375bdeb0ee7beadb090"
 dependencies = [
- "josekit",
- "oid-registry",
- "rsa 0.10.0-rc.18",
- "sha1 0.11.0",
+ "kapun-crypto-provider 0.1.0 (git+https://github.com/heidiverse/kapun-sdk.git?branch=feature%2Fcrypto-provider)",
+ "p12",
+ "rand 0.8.8",
+ "sha2 0.10.9",
+ "signature 3.0.0",
+ "simple_x509",
  "tracing",
  "ureq 3.4.0",
  "whitespace-sifter",
+ "x509-cert",
  "x509-parser",
 ]
 
@@ -6194,7 +6220,7 @@ version = "0.50.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7957b9740744892f114936ab4a57b3f487491bbeafaf8083688b16841a4240e5"
 dependencies = [
- "windows-sys 0.61.2",
+ "windows-sys 0.59.0",
 ]
 
 [[package]]
@@ -6445,7 +6471,7 @@ source = "git+https://github.com/UbiqueInnovation/openidconnect-federation.git?b
 dependencies = [
  "anyhow",
  "base64 0.22.1",
- "heidi-jwt",
+ "heidi-jwt 0.1.2 (git+https://github.com/heidiverse/heidi-jwt?branch=feeature%2Fkapun)",
  "itertools 0.14.0",
  "paste",
  "petgraph",
@@ -8161,7 +8187,7 @@ dependencies = [
  "errno",
  "libc",
  "linux-raw-sys",
- "windows-sys 0.61.2",
+ "windows-sys 0.59.0",
 ]
 
 [[package]]
@@ -9508,7 +9534,7 @@ dependencies = [
  "getrandom 0.4.3",
  "once_cell",
  "rustix",
- "windows-sys 0.61.2",
+ "windows-sys 0.59.0",
 ]
 
 [[package]]
@@ -11237,7 +11263,7 @@ version = "0.1.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c2a7b1c03c876122aa43f3020e6c3c3ee5c05081c9a00739faf7503aeba10d22"
 dependencies = [
- "windows-sys 0.61.2",
+ "windows-sys 0.48.0",
 ]
 
 [[package]]
