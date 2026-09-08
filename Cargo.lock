@@ -5088,14 +5088,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "kapun-crypto-provider"
-version = "0.1.0"
-source = "git+https://github.com/KapunSDK/kapun-sdk.git?branch=feature%2Fcrypto-provider#bd6f33c3c1459ef429ac8b668fa950699fcbf8d3"
-dependencies = [
- "oid-registry",
-]
-
-[[package]]
 name = "kapun-crypto-rust"
 version = "0.1.0"
 dependencies = [
@@ -5382,7 +5374,7 @@ dependencies = [
  "base64 0.22.1",
  "flate2",
  "josekit",
- "kapun-crypto-provider 0.1.0 (git+https://github.com/KapunSDK/kapun-sdk.git?branch=feature%2Fcrypto-provider)",
+ "kapun-crypto-provider 0.1.0",
  "p12",
  "pem",
  "rand 0.8.8",
