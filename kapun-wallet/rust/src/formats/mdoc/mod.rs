@@ -771,8 +771,6 @@ mod tests {
         use crate::testing::signing::new_native_signer;
 
         use base64::prelude::*;
-        use did_key::{KeyMaterial, P256KeyPair, from_existing_key};
-        use p256::PublicKey;
 
         let credential = VerifiableCredential {
             id: 1337,
@@ -788,16 +786,6 @@ mod tests {
             get_matching_credentials(&[credential], &sample_presentation_definition(), None)
                 .unwrap()
                 .swap_remove(0);
-
-        let secret_key = "dc77599b6aabd6693454409b7fe4f6334c794fd5873eeaf49f59c65ad3571e00";
-        let kp = from_existing_key::<P256KeyPair>(&[], Some(&hex::decode(secret_key).unwrap()));
-
-        println!(
-            "{}",
-            PublicKey::from_sec1_bytes(&kp.public_key_bytes())
-                .unwrap()
-                .to_jwk_string()
-        );
 
         let signer = new_native_signer();
 
