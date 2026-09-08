@@ -40,8 +40,10 @@ import org.kapunsdk.wallet.process.ProcessStep
 import org.kapunsdk.wallet.process.presentation.remote.RemotePresentationProcessStep
 import kotlinx.serialization.json.Json
 import uniffi.kapun_wallet_rust.OidcSettings
+import uniffi.kapun_wallet_rust.WalletBackend
 
 open class EaaIssuanceProcessHandler(
+	private val walletBackend: WalletBackend,
 	private val signingProvider: SigningProvider,
 	private val trustController: TrustFrameworkController,
 	private val issuerRepository: IssuerRepository,
@@ -66,6 +68,7 @@ open class EaaIssuanceProcessHandler(
 			// A new EAA issuance process is started
 			inputEvent is EaaIssuanceProcessEvent.CredentialOfferReceived -> {
 				currentProcess = EaaIssuanceProcess(
+					walletBackend = walletBackend,
 					signingProvider = signingProvider,
 					issuerRepository = issuerRepository,
 					identityRepository = identityRepository,
@@ -85,6 +88,7 @@ open class EaaIssuanceProcessHandler(
 			}
 			inputEvent is EaaIssuanceProcessEvent.DeferredIssuance -> {
 				currentProcess = EaaIssuanceProcess(
+					walletBackend = walletBackend,
 					signingProvider = signingProvider,
 					issuerRepository = issuerRepository,
 					identityRepository = identityRepository,

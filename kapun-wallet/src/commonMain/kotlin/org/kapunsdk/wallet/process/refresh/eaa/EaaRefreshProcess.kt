@@ -47,7 +47,6 @@ import org.kapunsdk.wallet.credentials.oca.OcaRepository
 import org.kapunsdk.wallet.credentials.oca.networking.OcaServiceController
 import org.kapunsdk.wallet.crypto.SecureHardwareAccess
 import org.kapunsdk.wallet.crypto.SigningProvider
-import org.kapunsdk.wallet.environment.EnvironmentController
 import org.kapunsdk.wallet.extensions.asErrorState
 import org.kapunsdk.wallet.keyvalue.KeyValueRepository
 import io.ktor.client.plugins.ResponseException
@@ -62,6 +61,7 @@ import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
 class EaaRefreshProcess(
+	private val walletBackend: WalletBackend,
 	private val trustController: TrustFrameworkController,
 	private val credentialsRepository: CredentialsRepository,
 	private val identityRepository: IdentityRepository,
@@ -97,7 +97,6 @@ class EaaRefreshProcess(
 				identity.credentialConfigurationIds ?: "",
 			)
 			val credentialIssuerMetadata : CredentialIssuerMetadata = json.decodeFromString(identity.issuer.credentialIssuerMetadata)
-			val walletBackend = WalletBackend(EnvironmentController.getHsmBackendUrl())
 			val dpopSigner = secureHardwareAccess.getHardwareSigner(identity.tokens.dpopKeyReference)!!
 			val issuance = Oid4VciIssuance.fromMetadata(oidcMetadata, walletBackend, dpopSigner)
 			val tokens = issuance.refreshToken(

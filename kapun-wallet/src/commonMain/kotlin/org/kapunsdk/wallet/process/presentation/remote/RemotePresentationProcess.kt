@@ -57,6 +57,7 @@ import org.kapunsdk.util.extensions.get
 import uniffi.kapun_wallet_rust.ApiException
 import uniffi.kapun_wallet_rust.GenericException
 import uniffi.kapun_wallet_rust.VerifiableCredential
+import uniffi.kapun_wallet_rust.WalletBackend
 
 import org.kapunsdk.wallet.crypto.SecureHardwareAccess
 import org.kapunsdk.wallet.credentials.oca.OcaRepository
@@ -74,8 +75,9 @@ import kotlin.time.Instant
 
 @OptIn(ExperimentalTime::class)
 class RemotePresentationProcess(
-    private val client: HttpClient,
-    private val signingProvider: SigningProvider,
+	private val client: HttpClient,
+	private val walletBackend: WalletBackend,
+	private val signingProvider: SigningProvider,
     private val trustController: TrustFrameworkController,
     private val identityRepository: IdentityRepository,
     private val credentialsRepository: CredentialsRepository,
@@ -638,6 +640,7 @@ class RemotePresentationProcess(
                 val identity = identityRepository.getById(id) ?: continue
                 val identityUi = viewModelFactory.getIdentityUiModel(identity) ?: continue
                 val refresh = EaaRefreshProcess(
+					walletBackend,
                     trustController,
                     credentialsRepository,
                     identityRepository,

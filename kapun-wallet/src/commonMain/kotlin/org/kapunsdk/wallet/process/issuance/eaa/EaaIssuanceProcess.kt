@@ -49,7 +49,6 @@ import org.kapunsdk.wallet.credentials.oca.networking.OcaServiceController
 import org.kapunsdk.wallet.crypto.SecureHardwareAccess
 import org.kapunsdk.wallet.crypto.SecureHardwareAccessControl
 import org.kapunsdk.wallet.crypto.SigningProvider
-import org.kapunsdk.wallet.environment.EnvironmentController
 import org.kapunsdk.wallet.extensions.asErrorState
 import org.kapunsdk.wallet.extensions.decodeMetadata
 import org.kapunsdk.wallet.keyvalue.KeyValueRepository
@@ -59,7 +58,8 @@ import kotlinx.serialization.json.*
 import uniffi.kapun_wallet_rust.*
 
 open class EaaIssuanceProcess(
-    private val signingProvider: SigningProvider,
+	private val walletBackend: WalletBackend,
+	private val signingProvider: SigningProvider,
     private val issuerRepository: IssuerRepository,
     private val identityRepository: IdentityRepository,
     private val activityRepository: ActivityRepository,
@@ -137,8 +137,6 @@ open class EaaIssuanceProcess(
                     identity.issuer.authorizationServerMetadata,
                     identity.credentialConfigurationIds ?: "",
                 )
-            val walletBackend = WalletBackend(EnvironmentController.getHsmBackendUrl())
-
             val dpopSigner =
                 secureHardwareAccess.getHardwareSigner(identity.tokens.dpopKeyReference)!!
 
@@ -212,7 +210,6 @@ open class EaaIssuanceProcess(
         return try {
             // For software key use SoftwareKeyPair().asNativeSigner()
             val signer = signingProvider.createHardwareSigner(SecureHardwareAccessControl.NONE)
-            val walletBackend = WalletBackend(EnvironmentController.getHsmBackendUrl())
             issuance = Oid4VciIssuance.initIssuance(oidcSettings, walletBackend, signer)
 
             val credOfferJson = json.encodeToString(credentialOffer)
