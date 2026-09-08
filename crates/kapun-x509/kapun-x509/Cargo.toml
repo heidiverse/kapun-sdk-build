@@ -8,7 +8,7 @@ x509-parser = { version = "0.16.0", features = ["validate"] }
 ureq = { workspace = true, optional = true }
 whitespace-sifter = "2.3.7"
 tracing = "^0.1"
-kapun-crypto-provider = { git = "https://github.com/heidiverse/kapun-sdk.git", branch = "feature/crypto-provider", default-features = false }
+kapun-crypto-provider = { git = "https://github.com/KapunSDK/kapun-sdk.git", branch = "feature/crypto-provider", default-features = false }
 simple_x509 = { version = "1.1.0"}
 rand.workspace = true
 p12 = { git = "https://github.com/ubamrein/p12.git", optional = true}
