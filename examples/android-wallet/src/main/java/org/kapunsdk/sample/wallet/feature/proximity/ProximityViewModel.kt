@@ -36,7 +36,6 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import uniffi.kapun_credential_core_rust.SignatureCreator
 import uniffi.kapun_crypto_rust.SoftwareKeyPair
-import uniffi.kapun_crypto_rust.base64UrlDecode
 import uniffi.kapun_crypto_rust.parseEncodedJwtPayload
 import uniffi.kapun_dcql_rust.DcqlQuery
 import uniffi.kapun_util_rust.Value
@@ -93,9 +92,8 @@ class ProximityViewModel : ViewModel(), KoinComponent {
 		}
 	}
 
-	val ISSUER_DID = "did:<...>"
-	val ISSUER_PRIVATE_KEY = "secret scalar of the p256 curve b64 encoded"
-	val ISSUER_SIGNER =  TestSigner(SoftwareKeyPair.fromPrivateKey(base64UrlDecode(ISSUER_PRIVATE_KEY)))
+	private val issuerDid = "did:example:issuer"
+	private val issuerSigner = TestSigner(SoftwareKeyPair())
 
 	fun submitDocument() {
 		viewModelScope.launch {
@@ -108,7 +106,7 @@ class ProximityViewModel : ViewModel(), KoinComponent {
 			val sdjwt = SdJwt.create(claims = mapOf<String, Any>(
 				//TODO: add necessary exp, nbf, iat claims here, so we can check integrity on the check app
 				"vct" to "schema-a",
-				"iss" to ISSUER_DID,
+				"iss" to issuerDid,
 				"iat" to 1769179211,
 				"given_name" to "Pascal",
 				"family_name" to "Tester",
@@ -158,8 +156,8 @@ class ProximityViewModel : ViewModel(), KoinComponent {
 					listOf("issuing_authority").toClaimsPointer()!!
 				),
 				//TODO: Ideally we have a pubKeyJwk here and a signer, to actually sign the KB-JWT for verification
-				keyId = "$ISSUER_DID#assert-key-01",
-				key = ISSUER_SIGNER,
+				keyId = "$issuerDid#assert-key-01",
+				key = issuerSigner,
 				kbValue)
 			//TODO: ideally we would use the dcqlquery's select credential function with a database of tokens (c.f. in the wallet module)
 			val credentialQuery = dcqlQuery!!.credentials?.first()!!
