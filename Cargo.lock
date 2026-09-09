@@ -4720,7 +4720,7 @@ dependencies = [
 [[package]]
 name = "jlc"
 version = "0.3.0"
-source = "git+https://github.com/UbiqueInnovation/possum.git#0909892e9448e0500475d8c5827745c9697a2a5b"
+source = "git+https://github.com/heidiverse/possum.git#0909892e9448e0500475d8c5827745c9697a2a5b"
 dependencies = [
  "chrono",
  "jsonlogic",
@@ -7606,7 +7606,7 @@ dependencies = [
 [[package]]
 name = "rdf-proofs"
 version = "0.11.0"
-source = "git+https://github.com/UbiqueInnovation/rdf-proofs?branch=main#279786a5ae2b32e058f7ccda014d8703b4c31f4f"
+source = "git+https://github.com/heidiverse/rdf-proofs?branch=main#279786a5ae2b32e058f7ccda014d8703b4c31f4f"
 dependencies = [
  "ark-bls12-381",
  "ark-ec",
@@ -8484,7 +8484,7 @@ dependencies = [
 [[package]]
 name = "sdjwt"
 version = "0.7.3"
-source = "git+https://github.com/UbiqueInnovation/sd-jwt.git?branch=feature%2Fqes#807cdec0df3bdaf7d5d0a4480c7ce48f3357a4d9"
+source = "git+https://github.com/heidiverse/sd-jwt.git?branch=feature%2Fqes#807cdec0df3bdaf7d5d0a4480c7ce48f3357a4d9"
 dependencies = [
  "base64 0.21.7",
  "chrono",

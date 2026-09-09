@@ -17,7 +17,7 @@ serde_json.workspace = true
 sha2.workspace = true
 chrono.workspace = true
 openidconnect-federation.workspace = true
-jlc = { git = "https://github.com/UbiqueInnovation/possum.git" }
+jlc = { git = "https://github.com/heidiverse/possum.git" }
 flate2 = "1.1.1"
 [target.'cfg(any(target_os = "android"))'.dependencies]
 libc.workspace = true
