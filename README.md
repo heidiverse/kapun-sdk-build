@@ -7,7 +7,7 @@ The repository also contains sample Android wallet and verifier applications and
 ## What it covers
 
 - Credential formats: ISO mdoc, SD-JWT VC, W3C Verifiable Credentials, BBS, and Open Badges
-- Protocols and queries: OpenID4VCI, OpenID4VP, DCQL, and BLE proximity presentment
+- Protocols and queries: OpenID4VCI, OpenID4VP, DCQL, and BLE proximity presentation
 - Building blocks for wallets, issuers, verifiers, cryptography, trust, and credential visualization
 
 The implementations follow the relevant [OpenID4VCI](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html), [OpenID4VP](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html), [ISO/IEC 18013-5](https://www.iso.org/standard/69084.html), [SD-JWT VC](https://datatracker.ietf.org/doc/draft-ietf-oauth-sd-jwt-vc/), [DCQL](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-digital-credentials-query-la), and [Open Badges](https://www.imsglobal.org/spec/ob/v3p0/) specifications.
@@ -70,7 +70,9 @@ The resulting JVM coordinates use the `org.kapunsdk` group, for example `org.kap
 
 ## Get involved
 
-Bug reports and feature requests are welcome in the [issue tracker](https://github.com/KapunSDK/kapun-sdk/issues). Pull requests should include tests or a short explanation when tests are not applicable.
+Bug reports and feature requests are welcome in the [issue tracker](https://github.com/KapunSDK/kapun-sdk/issues). See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. Pull requests should include tests or a short explanation when tests are not applicable.
+
+Please report security vulnerabilities privately according to the [security policy](SECURITY.md). By participating in this project, you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## License
 
