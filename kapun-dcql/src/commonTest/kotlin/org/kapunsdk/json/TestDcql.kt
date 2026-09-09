@@ -62,7 +62,7 @@ class TestDcql {
             "               \"values\" : [\"did:example\"] " +
             "            }]," +
             "            \"meta\" : {\n" +
-            "                \"vct_values\" : [\"https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/matrikulations-bst/0.0.4\"]\n" +
+            "                \"vct_values\" : [\"https://schema.example.invalid/v1/schema/matrikulations-bst/0.0.4\"]\n" +
             "            },\n" +
             "            \"claims\" : [\n" +
             "                 {\n" +
@@ -81,11 +81,11 @@ class TestDcql {
             "    ]\n" +
             " }"
     val matrikulationsBstMusterstadt = "{\n" +
-            "  \"vct\": \"https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/matrikulations-bst/0.0.4\",\n" +
+            "  \"vct\": \"https://schema.example.invalid/v1/schema/matrikulations-bst/0.0.4\",\n" +
             "  \"iss\": \"did:example\",\n" +
             "  \"render\": {\n" +
             "    \"type\": \"OverlaysCaptureBundleV1\",\n" +
-            "    \"oca\": \"https://sprind-eudi-issuer-ws-dev.ubique.ch/oca/IAJSyv3uxGsR98qGGLnrEHTN20Z4okSgV1l5qQoBw3yK7.json\"\n" +
+            "    \"oca\": \"https://issuer.example.invalid/oca/IAJSyv3uxGsR98qGGLnrEHTN20Z4okSgV1l5qQoBw3yK7.json\"\n" +
             "  },\n" +
             "  \"unv\" : {\n" +
             "    \"matriculationNr\": \"01/7654321\",\n" +
@@ -113,10 +113,10 @@ class TestDcql {
 
     val rolesJson = "{\n" +
             "  \"vct\": \"testArray\",\n" +
-            "  \"iss\": \"https://sprind-eudi-issuer-ws-dev.ubique.ch\",\n" +
+            "  \"iss\": \"https://issuer.example.invalid\",\n" +
             "  \"render\": {\n" +
             "    \"type\": \"OverlaysCaptureBundleV1\",\n" +
-            "    \"oca\": \"https://sprind-eudi-issuer-ws-dev.ubique.ch/oca/IAJSyv3uxGsR98qGGLnrEHTN20Z4okSgV1l5qQoBw3yK7.json\"\n" +
+            "    \"oca\": \"https://issuer.example.invalid/oca/IAJSyv3uxGsR98qGGLnrEHTN20Z4okSgV1l5qQoBw3yK7.json\"\n" +
             "  },\n" +
             "  \"roles\" : [\n" +
             "        {\n" +
@@ -134,10 +134,10 @@ class TestDcql {
             "}"
     val rolesJson2 = "{\n" +
             "  \"vct\": \"testArray\",\n" +
-            "  \"iss\": \"https://sprind-eudi-issuer-ws-dev.ubique.ch\",\n" +
+            "  \"iss\": \"https://issuer.example.invalid\",\n" +
             "  \"render\": {\n" +
             "    \"type\": \"OverlaysCaptureBundleV1\",\n" +
-            "    \"oca\": \"https://sprind-eudi-issuer-ws-dev.ubique.ch/oca/IAJSyv3uxGsR98qGGLnrEHTN20Z4okSgV1l5qQoBw3yK7.json\"\n" +
+            "    \"oca\": \"https://issuer.example.invalid/oca/IAJSyv3uxGsR98qGGLnrEHTN20Z4okSgV1l5qQoBw3yK7.json\"\n" +
             "  },\n" +
             "  \"roles\" : [\n" +
             "        {\n" +
@@ -164,7 +164,7 @@ class TestDcql {
             "            \"id\" : \"test-parent-role\",\n" +
             "            \"format\" :  \"dc+sd-jwt\",\n" +
             "            \"meta\" : {\n" +
-            "                \"vct_values\" : [\"https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/matrikulations-bst/0.0.4\", \"testArray\"]\n" +
+            "                \"vct_values\" : [\"https://schema.example.invalid/v1/schema/matrikulations-bst/0.0.4\", \"testArray\"]\n" +
             "            },\n" +
             "            \"claims\" : [\n" +
             "                 {\n" +
@@ -181,7 +181,7 @@ class TestDcql {
             "            \"id\" : \"test-parent-role\",\n" +
             "            \"format\" :  \"dc+sd-jwt\",\n" +
             "            \"meta\" : {\n" +
-            "                \"vct_values\" : [\"https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/matrikulations-bst/0.0.4\", \"testArray\"]\n" +
+            "                \"vct_values\" : [\"https://schema.example.invalid/v1/schema/matrikulations-bst/0.0.4\", \"testArray\"]\n" +
             "            },\n" +
             "            \"claims\" : [\n" +
             "                 {\n" +
@@ -198,7 +198,7 @@ class TestDcql {
             "            \"id\" : \"test-parent-role\",\n" +
             "            \"format\" :  \"dc+sd-jwt\",\n" +
             "            \"meta\" : {\n" +
-            "                \"vct_values\" : [\"https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/matrikulations-bst/0.0.4\", \"testArray\"]\n" +
+            "                \"vct_values\" : [\"https://schema.example.invalid/v1/schema/matrikulations-bst/0.0.4\", \"testArray\"]\n" +
             "            },\n" +
             "            \"claims\" : [\n" +
             "                 {\n" +
