@@ -797,7 +797,7 @@ mod tests {
         let method = "GET".to_string();
         let uri = "https://resource.example.org/protectedresource".to_string();
 
-        let access_token = "Kz~8mXK1EalYznwH-LC-1fBAo.4Ljp~zsPE_NeO.gxU".to_string();
+        let access_token = "synthetic-test-access-token".to_string();
         let public_key = public_key_from_jwk(&json!({
             "kty":"EC",
             "x":"l8tFrhx-34tV3hRICRDY9zCkDlpBhF42UQUfWVAWBFs",
