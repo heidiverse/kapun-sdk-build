@@ -3825,7 +3825,7 @@ checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
 [[package]]
 name = "heidi-jwt"
 version = "0.1.2"
-source = "git+https://github.com/heidiverse/heidi-jwt#8c550e6886ba99920b7985efacb8e94813aec0e9"
+source = "git+https://github.com/heidiverse/heidi-jwt#166b333444bdba318f1c9e6b012ee95f65a94b68"
 dependencies = [
  "base64 0.22.1",
  "chrono",
@@ -4750,7 +4750,7 @@ dependencies = [
  "getrandom 0.3.4",
  "hmac 0.13.0",
  "k256",
- "kapun-crypto-provider 0.1.0 (git+https://github.com/heidiverse/kapun-sdk.git?branch=feature%2Fcrypto-provider)",
+ "kapun-crypto-provider",
  "ml-dsa",
  "p256 0.13.2",
  "p384",
@@ -5080,14 +5080,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "kapun-crypto-provider"
-version = "0.1.0"
-source = "git+https://github.com/heidiverse/kapun-sdk.git?branch=feature%2Fcrypto-provider#bd6f33c3c1459ef429ac8b668fa950699fcbf8d3"
-dependencies = [
- "oid-registry",
-]
-
-[[package]]
 name = "kapun-crypto-rust"
 version = "0.1.0"
 dependencies = [
@@ -5374,7 +5366,7 @@ dependencies = [
  "base64 0.22.1",
  "flate2",
  "josekit",
- "kapun-crypto-provider 0.1.0",
+ "kapun-crypto-provider",
  "p12",
  "pem",
  "rand 0.8.8",
@@ -5395,7 +5387,7 @@ name = "kapun-x509"
 version = "0.1.0"
 source = "git+https://github.com/heidiverse/kapun-sdk.git#2c71aad0df2f5f3ec7e8c375bdeb0ee7beadb090"
 dependencies = [
- "kapun-crypto-provider 0.1.0 (git+https://github.com/heidiverse/kapun-sdk.git?branch=feature%2Fcrypto-provider)",
+ "kapun-crypto-provider",
  "p12",
  "rand 0.8.8",
  "sha2 0.10.9",
