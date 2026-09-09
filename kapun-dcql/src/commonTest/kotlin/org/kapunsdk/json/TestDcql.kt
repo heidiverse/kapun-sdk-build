@@ -50,8 +50,9 @@ class TestDcql {
         }
     }
 
-    val privateKeySignature = "{\"kty\":\"EC\",\"crv\":\"P-256\",\"x\":\"8hL67MEiG_Fi0R0w3ZuLVEy3iQRaqpQHVJDu5FxqvEA\",\"y\":\"l16hzZH8v5HZrk15FVxjd4naGaKQTgVTg0lfWH1-rXw\",\"d\":\"upRQppmj4FakCuueGQFOWVfLJ-5MgmgJ_bWoI57FsbY\"}"
-    val privateKeyKeyBinding = "{\"kty\":\"EC\",\"crv\":\"P-256\",\"x\":\"r6H1rd3ykIZdKptSUYevNLOogOnfNPj00mqTlkiWt3w\",\"y\":\"zIvMTH70o0Mg5-ApGVwUzMQgWkKlCxVdzU6iFd-T_r0\",\"d\":\"bk3qorDnP1kXussdVqu9Nszq90Hrm8hmsMEOPN-LKJU\"}"
+    val issuerKey = SoftwareKeyPair()
+    val keyBindingKey = SoftwareKeyPair()
+    val deviceKeyJwk = Json.decodeFromString<Value>(keyBindingKey.jwkString())
     val uniQuery = " {\n" +
             "    \"credentials\" : [\n" +
             "        {\n" +
@@ -231,8 +232,8 @@ class TestDcql {
             listOf("unv", "subjects", null, "currentEcts").toClaimsPointer()!!,
             listOf("roles", null).toClaimsPointer()!!,
         )
-        val sdjwt1 = SdJwt.create(claims1, disclosures, "123", TestSigner(SoftwareKeyPair.fromJwkString(privateKeySignature)), Json.decodeFromString(privateKeyKeyBinding))!!
-        val sdjwt2 = SdJwt.create(claims2, disclosures, "123", TestSigner(SoftwareKeyPair.fromJwkString(privateKeySignature)), Json.decodeFromString(privateKeyKeyBinding))!!
+        val sdjwt1 = SdJwt.create(claims1, disclosures, "123", TestSigner(issuerKey), deviceKeyJwk)!!
+        val sdjwt2 = SdJwt.create(claims2, disclosures, "123", TestSigner(issuerKey), deviceKeyJwk)!!
 
         assertEquals(sdjwt1.innerJwt.disclosuresMap.size, sdjwt2.innerJwt.disclosuresMap.size)
         assertEquals(sdjwt1.innerJwt.disclosuresMap.size, 7)
@@ -251,7 +252,7 @@ class TestDcql {
         assertEquals(enrolledAt, "Universität Musterstadt")
         val respectiveQuery = query.credentials!!.first { it.id == results.id }
         val vpToken = SdJwt(decodeSdjwt(selectedCredential.v1.serialize())).getVpToken(respectiveQuery,"test", null, null, "1234", TestSigner(
-            SoftwareKeyPair.fromJwkString(privateKeyKeyBinding))).getOrThrow()
+            keyBindingKey)).getOrThrow()
 
         val parsedVpToken = SdJwt.parse(vpToken)
         assertEquals(parsedVpToken.innerJwt.disclosuresMap.size, 3)
@@ -273,8 +274,8 @@ class TestDcql {
             listOf("unv", "subjects", null, "currentEcts").toClaimsPointer()!!,
             listOf("roles", null).toClaimsPointer()!!,
         )
-        val sdjwt1 = SdJwt.create(claims1, disclosureswrong, "123", TestSigner(SoftwareKeyPair.fromJwkString(privateKeySignature)), Json.decodeFromString(privateKeyKeyBinding))!!
-        val sdjwt2 = SdJwt.create(claims2, disclosureswrong, "123", TestSigner(SoftwareKeyPair.fromJwkString(privateKeySignature)), Json.decodeFromString(privateKeyKeyBinding))!!
+        val sdjwt1 = SdJwt.create(claims1, disclosureswrong, "123", TestSigner(issuerKey), deviceKeyJwk)!!
+        val sdjwt2 = SdJwt.create(claims2, disclosureswrong, "123", TestSigner(issuerKey), deviceKeyJwk)!!
 
         val claims : Value = Json.decodeFromString(rolesJson)
         val claims3 : Value = Json.decodeFromString(rolesJson2)
@@ -287,8 +288,8 @@ class TestDcql {
             listOf("roles", null, "parentRoles", null).toClaimsPointer()!!,
             listOf("roles", null, "parentRoles", null, "name").toClaimsPointer()!!,
         )
-        val rolesSdjwt = SdJwt.create(claims, disclosures, "1234", TestSigner(SoftwareKeyPair.fromJwkString(privateKeySignature)), Json.decodeFromString(privateKeyKeyBinding))!!
-        val rolesSdjwt2 = SdJwt.create(claims3, disclosures, "1234", TestSigner(SoftwareKeyPair.fromJwkString(privateKeySignature)), Json.decodeFromString(privateKeyKeyBinding))!!
+        val rolesSdjwt = SdJwt.create(claims, disclosures, "1234", TestSigner(issuerKey), deviceKeyJwk)!!
+        val rolesSdjwt2 = SdJwt.create(claims3, disclosures, "1234", TestSigner(issuerKey), deviceKeyJwk)!!
 
         assertEquals(rolesSdjwt.innerJwt.disclosuresMap.size, 7)
         val sdjwt = SdJwt(rolesSdjwt.innerJwt)
@@ -306,7 +307,7 @@ class TestDcql {
         assertIs<Credential.SdJwtCredential>(selectedCredential)
         val credentialQuery = rolesParentRolesQuery.credentials!!.first { it.id == setOption.id}
         val vpToken = SdJwt(decodeSdjwt(selectedCredential.v1.serialize())).getVpToken(credentialQuery, "123", null, null, "123", TestSigner(
-            SoftwareKeyPair.fromJwkString(privateKeyKeyBinding))).getOrThrow()
+            keyBindingKey)).getOrThrow()
 
         val parsedVpToken = SdJwt.parse(vpToken)
         val parentRoleNamePointer = listOf("roles", null, "parentRoles", null, "name").toClaimsPointer()!!
@@ -323,7 +324,7 @@ class TestDcql {
             mapOf(credentialQuery.id to SdJwt( decodeSdjwt(
                 (result2[0].setOptions[0][0].options[0].credential as Credential.SdJwtCredential).v1.serialize())
             ).getVpToken(credentialQuery, "123", null, null, "123", TestSigner(
-                SoftwareKeyPair.fromJwkString(privateKeyKeyBinding)
+                keyBindingKey
             )).getOrThrow()),
             { _, _, _ -> emptyMap<String, Value>() }
         ).isSuccess)
@@ -332,7 +333,7 @@ class TestDcql {
             mapOf(credentialQuery.id to SdJwt(
                 (decodeSdjwt((result3[0].setOptions[0][0].options[0].credential as Credential.SdJwtCredential).v1.serialize()))
             ).getVpToken(credentialQuery, "123", null, null,"123", TestSigner(
-                SoftwareKeyPair.fromJwkString(privateKeyKeyBinding)
+                keyBindingKey
             )).getOrThrow()),
             { _, _, _ -> emptyMap<String, Value>() }
         ).isSuccess)
@@ -348,8 +349,8 @@ class TestDcql {
             listOf("unv", "subjects", null, "currentEcts").toClaimsPointer()!!,
             listOf("roles", null).toClaimsPointer()!!,
         )
-        val sdjwt1 = SdJwt.create(claims1, disclosureswrong, "123", TestSigner(SoftwareKeyPair.fromJwkString(privateKeySignature)), Json.decodeFromString(privateKeyKeyBinding))!!
-        val sdjwt2 = SdJwt.create(claims2, disclosureswrong, "123", TestSigner(SoftwareKeyPair.fromJwkString(privateKeySignature)), Json.decodeFromString(privateKeyKeyBinding))!!
+        val sdjwt1 = SdJwt.create(claims1, disclosureswrong, "123", TestSigner(issuerKey), deviceKeyJwk)!!
+        val sdjwt2 = SdJwt.create(claims2, disclosureswrong, "123", TestSigner(issuerKey), deviceKeyJwk)!!
 
         val claims : Value = Json.decodeFromString(rolesJson)
         val rolesAllNamesQuery : DcqlQuery = Json.decodeFromString(rolesQueryAllNames)
@@ -360,7 +361,7 @@ class TestDcql {
             listOf("roles", null, "parentRoles", null).toClaimsPointer()!!,
             listOf("roles", null, "parentRoles", null, "name").toClaimsPointer()!!,
         )
-        val rolesSdjwt = SdJwt.create(claims, disclosures, "1234", TestSigner(SoftwareKeyPair.fromJwkString(privateKeySignature)), Json.decodeFromString(privateKeyKeyBinding))!!
+        val rolesSdjwt = SdJwt.create(claims, disclosures, "1234", TestSigner(issuerKey), deviceKeyJwk)!!
         assertEquals(rolesSdjwt.innerJwt.disclosuresMap.size, 7)
         val sdjwt = SdJwt(rolesSdjwt.innerJwt)
         val result = selectCredentials(rolesAllNamesQuery, listOf(sdjwt.innerJwt.originalSdjwt, sdjwt1.innerJwt.originalSdjwt, sdjwt2.innerJwt.originalSdjwt))
@@ -372,7 +373,7 @@ class TestDcql {
         assertIs<Credential.SdJwtCredential>(selectedCredential)
         val credentialQuery = rolesAllNamesQuery.credentials!!.first { it.id == setOption.id}
         val vpToken = SdJwt(decodeSdjwt(selectedCredential.v1.serialize()) ).getVpToken(credentialQuery, "123", null, null, "123", TestSigner(
-            SoftwareKeyPair.fromJwkString(privateKeyKeyBinding))).getOrThrow()
+            keyBindingKey)).getOrThrow()
 
         val parsedVpToken = SdJwt.parse(vpToken)
         val parentRoleNamePointer = listOf("roles", null, "parentRoles", null, "name").toClaimsPointer()!!
@@ -393,8 +394,8 @@ class TestDcql {
             listOf("unv", "subjects", null, "currentEcts").toClaimsPointer()!!,
             listOf("roles", null).toClaimsPointer()!!,
         )
-        val sdjwt1 = SdJwt.create(claims1, disclosureswrong, "123", TestSigner(SoftwareKeyPair.fromJwkString(privateKeySignature)), Json.decodeFromString(privateKeyKeyBinding))!!
-        val sdjwt2 = SdJwt.create(claims2, disclosureswrong, "123", TestSigner(SoftwareKeyPair.fromJwkString(privateKeySignature)), Json.decodeFromString(privateKeyKeyBinding))!!
+        val sdjwt1 = SdJwt.create(claims1, disclosureswrong, "123", TestSigner(issuerKey), deviceKeyJwk)!!
+        val sdjwt2 = SdJwt.create(claims2, disclosureswrong, "123", TestSigner(issuerKey), deviceKeyJwk)!!
 
         val claims : Value = Json.decodeFromString(rolesJson)
         val claims3 : Value = Json.decodeFromString(rolesJson2)
@@ -406,12 +407,10 @@ class TestDcql {
             listOf("roles", null, "parentRoles", null).toClaimsPointer()!!,
             listOf("roles", null, "parentRoles", null, "name").toClaimsPointer()!!,
         )
-        val rolesSdjwt = SdJwt.create(claims, disclosures, "1234", TestSigner(SoftwareKeyPair.fromJwkString(privateKeySignature)), Json.decodeFromString(privateKeyKeyBinding))!!
-        val rolesSdjwt2 = SdJwt.create(claims3, disclosures, "1234", TestSigner(SoftwareKeyPair.fromJwkString(privateKeySignature)), Json.decodeFromString(privateKeyKeyBinding))!!
+        val rolesSdjwt = SdJwt.create(claims, disclosures, "1234", TestSigner(issuerKey), deviceKeyJwk)!!
+        val rolesSdjwt2 = SdJwt.create(claims3, disclosures, "1234", TestSigner(issuerKey), deviceKeyJwk)!!
 
         println("---")
-        println("issuerKey: $privateKeySignature")
-        println("kbKey: $privateKeyKeyBinding")
         println("---")
         println("sdjwt1: ${sdjwt1.innerJwt.originalSdjwt}")
         println("sdjwt2: ${sdjwt2.innerJwt.originalSdjwt}")

@@ -58,27 +58,6 @@ import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
 class TestDcqlVerification {
-    private val privateKeySignature =
-        """
-        {
-            "kty": "EC",
-            "crv": "P-256",
-            "x": "8hL67MEiG_Fi0R0w3ZuLVEy3iQRaqpQHVJDu5FxqvEA",
-            "y": "l16hzZH8v5HZrk15FVxjd4naGaKQTgVTg0lfWH1-rXw",
-            "d": "upRQppmj4FakCuueGQFOWVfLJ-5MgmgJ_bWoI57FsbY" 
-        }
-        """.trimIndent()
-    private val privateKeyKeyBinding =
-        """
-        {
-            "kty": "EC",
-            "crv": "P-256",
-            "x": "r6H1rd3ykIZdKptSUYevNLOogOnfNPj00mqTlkiWt3w",
-            "y": "zIvMTH70o0Mg5-ApGVwUzMQgWkKlCxVdzU6iFd-T_r0",
-            "d": "bk3qorDnP1kXussdVqu9Nszq90Hrm8hmsMEOPN-LKJU"
-        }
-        """.trimIndent()
-
     private val audience = "test-audience-1"
     private val nonce = "test-nonce-1"
 
@@ -86,10 +65,11 @@ class TestDcqlVerification {
     private val mdocGeneratedNonce = "test-nonce-1"
 
     private val keyId = "TestKey-1"
-    private val issuerKey = SoftwareKeyPair.fromJwkString(privateKeySignature)
+    private val issuerKey = SoftwareKeyPair()
     private val issuerSigner = TestDcql.TestSigner(issuerKey)
-    private val deviceKeyJwk = Json.decodeFromString<Value>(privateKeyKeyBinding)
-    private val keyBindingKey = TestDcql.TestSigner(SoftwareKeyPair.fromJwkString(privateKeyKeyBinding))
+    private val keyBindingKeyPair = SoftwareKeyPair()
+    private val deviceKeyJwk = Json.decodeFromString<Value>(keyBindingKeyPair.jwkString())
+    private val keyBindingKey = TestDcql.TestSigner(keyBindingKeyPair)
 
     private fun verify(query: DcqlQuery, vpTokens: DcqlPresentation) = checkDcqlPresentation(
         query,
