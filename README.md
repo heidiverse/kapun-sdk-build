@@ -1,104 +1,59 @@
-# Kapun SDK 
+# Kapun SDK
 
-## Introduction
+The Kapun SDK is a Kotlin Multiplatform toolkit for building digital-identity wallets and verifiers on Android and iOS. It includes credential formats, DCQL, issuance, presentation, wallet, cryptography, trust, proximity, and visualization modules.
 
-This repository contains the source code for the Kapun SDK. The SDK is written in Kotlin Multiplatform and can be used to build Android and iOS applications.
+The repository also contains sample Android wallet and verifier applications and an iOS sample. The samples are demonstrations and may require application-specific wallet or backend configuration.
 
-## Architecture
+## Prerequisites
 
-The Kapun SDK consists of a collection of independent modules, where each module implements specific features used for digital identity wallets and verifiers.
+- JDK 17 or newer
+- Android Studio for the Android samples
+- Xcode 15.4 or newer for the iOS sample
 
-### Modules
+## Build the samples
 
-#### Kapun Core
-The core module acts as a baseline for the SDK and contains basic functionality used by all other modules. This includes utility and extension functions.
-
-#### Kapun Proximity
-The proximity module includes an implementation of the [OpenID for Verifiable Presentations over BLE](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html) specification.
-This implementation allows a wallet to present verifiable credentials to a verifier over Bluetooth Low Energy (BLE).
-Right now, only the transport layer is implemented, the actual credential presentation and verification needs to be done by the implementing wallet and verifier.
-
-#### Sample applications
-The repository includes sample applications for Android and iOS that demonstrate how to use the Kapun SDK.
-The samples are intended for development and may not cover all SDK features while the project continues to evolve.
-
-## Getting started
-
-### Prerequisites
-- **JDK 17 or higher**: Ensure that you have a compatible JDK installed.
-- **Android Studio**: Required for building and running the Android sample apps.
-- **Xcode 15.4 or higher**: Required for building and running the iOS sample app.
-
-### Building the project
-
-#### Android
-
-To build and run the Android sample wallet:
+### Android
 
 ```bash
-./gradlew :sample-android-wallet:assembleDebug
-./gradlew :sample-android-wallet:installDebug
+./gradlew :examples:android-wallet:assembleDebug
+./gradlew :examples:android-wallet:installDebug
+
+./gradlew :examples:android-verifier:assembleDebug
+./gradlew :examples:android-verifier:installDebug
 ```
 
-To build and run the Android sample verifier:
+### iOS
 
-```bash
-./gradlew :sample-android-verifier:assembleDebug
-./gradlew :sample-android-verifier:installDebug
+Open `sample-ios-kapun.xcodeproj` in Xcode, select a simulator or device, and run the `sample-ios-kapun` target. Device builds require your own provisioning profile. The sample requires iOS 16 or newer.
+
+If the build needs Android SDK information, set `ANDROID_HOME` and create a root `local.properties` file containing:
+
+```properties
+sdk.dir=/path/to/your/android/sdk
 ```
 
-#### iOS
+## Use the published SDK
 
-To build and run the iOS sample app:
+Released artifacts are available from Maven Central. Add `mavenCentral()` to your repositories and depend on the module you need, for example:
 
-> It is required to open the project folder first in Android Studio to generate the necessary *local.properties* file containing the ANDROID_HOME environment variable.
+```kotlin
+dependencies {
+    implementation("org.kapunsdk:kapun-wallet:1.0.0")
+}
+```
 
-1. Open `sample-ios-kapun.xcodeproj` in Xcode.
-2. The sample project is configured for a specific provisioning profile. To install the app on your own device, you will have to update the settings using your own provisioning profile. You find the signing options in the *sample-ios-kapun* Target configation
-3. Select the target device or simulator. Note that the device is required to have iOS 16.0 or higher installed.
-4. Click the Run button in Xcode.
+Replace `1.0.0` with the release you want.
 
-#### Running JVM Code (MacOS)
-1. Configure `˜/.cargo/config.toml` by setting
- ```bash
-      [target.x86_64-unknown-linux-gnu]
-      linker = "x86_64-linux-gnu-gcc"
-      
-      [target.aarch64-unknown-linux-gnu]
-      linker = "aarch64-linux-gnu-gcc"
- ```
+## Publish locally
 
-2. Install macos cross toolchains (https://github.com/messense/homebrew-macos-cross-toolchains)
- ```bash
-   brew tap messense/macos-cross-toolchains
-   # install x86_64-unknown-linux-gnu toolchain
-   brew install x86_64-unknown-linux-gnu
-   # install aarch64-unknown-linux-gnu toolchain
-   brew install aarch64-unknown-linux-gnu
-  ```
-
-3. Set up env var:
- ```bash
-  export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=x86_64-linux-gnu-gcc
- ``` 
-4. Install minGW64:
- ```bash
-  brew install mingw-w64
- ```
-
-### Publishing to Maven Local
-
-To build against a local SDK version, publish the JVM artifacts to `~/.m2`:
+To publish JVM artifacts to your local Maven repository:
 
 ```bash
 ./gradlew publishJvmPublicationToMavenLocal -PARTIFACT_VERSION=1.0.0-LOCAL
 ```
 
-Gradle runs the task in every module that has a JVM publication, so consumers can depend on the
-`-jvm` coordinates (e.g. `org.kapunsdk:kapun-trust-jvm:1.0.0-LOCAL`). Publishing every target
-locally, including Android and iOS, is done with `./gradlew publishToMavenLocal` and requires the
-Rust toolchains for all targets. Signing is disabled by default (see `RELEASE_SIGNING_ENABLED` in
-`gradle.properties`), so no signatory needs to be configured.
+The resulting JVM coordinates use the `org.kapunsdk` group, for example `org.kapunsdk:kapun-trust-jvm:1.0.0-LOCAL`. Publishing all targets requires the corresponding Rust toolchains. Release signing is disabled by default.
 
 ## License
-This project is licensed under the terms of the Apache License 2. See the [LICENSE](./LICENSE) file for details.
+
+This project is licensed under the Apache License 2.0. See [LICENSE](./LICENSE).
