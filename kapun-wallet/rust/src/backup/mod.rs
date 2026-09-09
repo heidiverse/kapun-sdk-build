@@ -510,7 +510,8 @@ mod tests {
         derived_secret.expand(&[], &mut out).unwrap();
         let cipher = <Aes256Gcm as aes_gcm::KeyInit>::new_from_slice(&out).unwrap();
         let nonce = Aes256Gcm::generate_nonce(&mut OsRng);
-        let cipher = cipher.encrypt(&nonce, "1234".as_bytes()).unwrap();
+        let test_plaintext = b"synthetic-test-backup";
+        let cipher = cipher.encrypt(&nonce, test_plaintext).unwrap();
         let share1_serialize = shares.0.first().unwrap().to_owned();
         let share1_serialize: SerializeableShare = (
             share1_serialize.id,
@@ -538,6 +539,6 @@ mod tests {
             .unwrap();
         let decipher = <Aes256Gcm as aes_gcm::KeyInit>::new_from_slice(&out_reconstructed).unwrap();
         let result = decipher.decrypt(&nonce, cipher.as_slice()).unwrap();
-        assert_eq!("1234".as_bytes(), result.as_slice());
+        assert_eq!(test_plaintext, result.as_slice());
     }
 }
