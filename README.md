@@ -16,6 +16,8 @@ The implementations follow the relevant [OpenID4VCI](https://openid.net/specs/op
 
 The project is actively evolving. Check the [releases](https://github.com/KapunSDK/kapun-sdk/releases) for published versions; APIs and implementation details may change between releases.
 
+This project evolved from the former Heidi SDK and is now maintained as the Kapun SDK under the KapunSDK organization. Older documentation and package references may still use the Heidi name.
+
 ## Prerequisites
 
 - JDK 17 or newer
