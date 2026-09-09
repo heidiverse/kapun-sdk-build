@@ -234,8 +234,8 @@ class TestDcqlVerification {
         val sdJwt = createSdJwk(
             """
                 {
-                    "vct": "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/matrikulations-bst/0.0.4",
-                    "iss": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                    "vct": "https://schema.example.invalid/v1/schema/matrikulations-bst/0.0.4",
+                    "iss": "https://issuer.example.invalid",
                     "given_name": "John",
                     "family_name": "Doe",
                     "address": {
@@ -284,8 +284,8 @@ class TestDcqlVerification {
         val sdJwt = createSdJwk(
             """
                 {
-                    "vct": "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/matrikulations-bst/0.0.4",
-                    "iss": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                    "vct": "https://schema.example.invalid/v1/schema/matrikulations-bst/0.0.4",
+                    "iss": "https://issuer.example.invalid",
                     "given_name": "John",
                     "family_name": "Doe",
                     "address": {
@@ -337,8 +337,8 @@ class TestDcqlVerification {
         val sdJwt = createSdJwk(
             """
                 {
-                    "vct": "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/matrikulations-bst/0.0.4",
-                    "iss": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                    "vct": "https://schema.example.invalid/v1/schema/matrikulations-bst/0.0.4",
+                    "iss": "https://issuer.example.invalid",
                     "given_name": "John",
                     "family_name": "Doe",
                     "address": {
@@ -406,7 +406,7 @@ class TestDcqlVerification {
             """
             {
                 "vct": "https://credentials.example.com/identity_credential",
-                "iss": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                "iss": "https://issuer.example.invalid",
                 "postal_code": "1234",
                 "last_name": "Doe",
                 "date_of_birth": "2000-01-01"
@@ -459,7 +459,7 @@ class TestDcqlVerification {
             """
             {
                 "vct": "https://credentials.example.com/identity_credential",
-                "iss": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                "iss": "https://issuer.example.invalid",
                 "postal_code": "1234",
                 "last_name": "Doe",
                 "date_of_birth": "2000-01-01"
@@ -514,8 +514,8 @@ class TestDcqlVerification {
         val sdJwt = createSdJwk(
             """
             {
-                "vct": "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/matrikulations-bst/0.0.4",
-                "iss": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                "vct": "https://schema.example.invalid/v1/schema/matrikulations-bst/0.0.4",
+                "iss": "https://issuer.example.invalid",
                 "given_name": "John",
                 "family_name": "Doe",
                 "address": {
@@ -555,8 +555,8 @@ class TestDcqlVerification {
         val sdJwt = createSdJwk(
             """
             {
-                "vct": "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/matrikulations-bst/0.0.4",
-                "iss": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                "vct": "https://schema.example.invalid/v1/schema/matrikulations-bst/0.0.4",
+                "iss": "https://issuer.example.invalid",
                 "given_name": "John",
                 "family_name": "Doe",
                 "address": {
@@ -602,8 +602,8 @@ class TestDcqlVerification {
         val sdJwt = createSdJwk(
             """
             {
-                "vct": "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/matrikulations-bst/0.0.4",
-                "iss": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                "vct": "https://schema.example.invalid/v1/schema/matrikulations-bst/0.0.4",
+                "iss": "https://issuer.example.invalid",
                 "given_name": "John",
                 "family_name": "Doe",
                 "address": {
@@ -627,7 +627,7 @@ class TestDcqlVerification {
                         "format": "dc+sd-jwt",
                         "meta": {
                             "vct_values": [
-                                "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/matrikulations-bst/0.0.4"
+                                "https://schema.example.invalid/v1/schema/matrikulations-bst/0.0.4"
                             ]
                         },
                         "claims": [
@@ -653,8 +653,8 @@ class TestDcqlVerification {
         val sdJwt = createSdJwk(
             """
             {
-                "vct": "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/matrikulations-bst/0.0.4",
-                "iss": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                "vct": "https://schema.example.invalid/v1/schema/matrikulations-bst/0.0.4",
+                "iss": "https://issuer.example.invalid",
                 "given_name": "John",
                 "family_name": "Doe",
                 "address": {
@@ -711,7 +711,7 @@ class TestDcqlVerification {
             """
             {
                 "vct": "https://credentials.example.com/reduced_identity_credential",
-                "iss": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                "iss": "https://issuer.example.invalid",
                 "given_name": "John",
                 "family_name": "Doe",
                 "address": {
@@ -729,7 +729,7 @@ class TestDcqlVerification {
             """
             {
                 "vct": "https://cred.example/residence_credential",
-                "iss": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                "iss": "https://issuer.example.invalid",
                 "postal_code": "1234",
                 "locality": "here",
                 "region": "Zurich"
@@ -855,7 +855,7 @@ class TestDcqlVerification {
             """
             {
                 "vct": "https://credentials.example.com/reduced_identity_credential",
-                "iss": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                "iss": "https://issuer.example.invalid",
                 "given_name": "John",
                 "family_name": "Doe",
                 "address": {
@@ -1632,9 +1632,9 @@ class TestDcqlVerification {
                     "@context": [ "https://www.w3.org/ns/credentials/v2" ],
                     "type": [
                         "VerifiableCredential",
-                        "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/matrikulations-bst/0.0.4"
+                        "https://schema.example.invalid/v1/schema/matrikulations-bst/0.0.4"
                     ],
-                    "issuer": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                    "issuer": "https://issuer.example.invalid",
                     "credentialSubject": {
                         "given_name": "John",
                         "family_name": "Doe",
@@ -1688,9 +1688,9 @@ class TestDcqlVerification {
                     "@context": [ "https://www.w3.org/ns/credentials/v2" ],
                     "type": [
                         "VerifiableCredential",
-                        "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/matrikulations-bst/0.0.4"
+                        "https://schema.example.invalid/v1/schema/matrikulations-bst/0.0.4"
                     ],
-                    "issuer": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                    "issuer": "https://issuer.example.invalid",
                     "credentialSubject": {
                         "given_name": "John",
                         "family_name": "Doe",
@@ -1747,9 +1747,9 @@ class TestDcqlVerification {
                     "@context": [ "https://www.w3.org/ns/credentials/v2" ],
                     "type": [
                         "VerifiableCredential",
-                        "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/matrikulations-bst/0.0.4"
+                        "https://schema.example.invalid/v1/schema/matrikulations-bst/0.0.4"
                     ],
-                    "issuer": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                    "issuer": "https://issuer.example.invalid",
                     "credentialSubject": {
                         "given_name": "John",
                         "family_name": "Doe",
@@ -1823,7 +1823,7 @@ class TestDcqlVerification {
                     "VerifiableCredential",
                     "https://credentials.example.com/identity_credential"
                 ],
-                "issuer": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                "issuer": "https://issuer.example.invalid",
                 "credentialSubject": {
                     "postal_code": "1234",
                     "last_name": "Doe",
@@ -1879,7 +1879,7 @@ class TestDcqlVerification {
                     "VerifiableCredential",
                     "https://credentials.example.com/identity_credential"
                 ],
-                "issuer": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                "issuer": "https://issuer.example.invalid",
                 "credentialSubject": {
                     "postal_code": "1234",
                     "last_name": "Doe",
@@ -1936,9 +1936,9 @@ class TestDcqlVerification {
                     "@context": [ "https://www.w3.org/ns/credentials/v2" ],
                     "type": [
                         "VerifiableCredential",
-                        "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/matrikulations-bst/0.0.4"
+                        "https://schema.example.invalid/v1/schema/matrikulations-bst/0.0.4"
                     ],
-                    "issuer": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                    "issuer": "https://issuer.example.invalid",
                     "credentialSubject": {
                         "given_name": "John",
                         "family_name": "Doe",
@@ -1983,9 +1983,9 @@ class TestDcqlVerification {
                     "@context": [ "https://www.w3.org/ns/credentials/v2" ],
                     "type": [
                         "VerifiableCredential",
-                        "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/matrikulations-bst/0.0.4"
+                        "https://schema.example.invalid/v1/schema/matrikulations-bst/0.0.4"
                     ],
-                    "issuer": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                    "issuer": "https://issuer.example.invalid",
                     "credentialSubject": {
                         "given_name": "John",
                         "family_name": "Doe",
@@ -2038,7 +2038,7 @@ class TestDcqlVerification {
                     "VerifiableCredential",
                     "https://credentials.example.com/reduced_identity_credential"
                 ],
-                "issuer": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                "issuer": "https://issuer.example.invalid",
                 "credentialSubject": {
                     "given_name": "John",
                     "family_name": "Doe",
@@ -2062,7 +2062,7 @@ class TestDcqlVerification {
                     "VerifiableCredential",
                     "https://cred.example/residence_credential"
                 ],
-                "issuer": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                "issuer": "https://issuer.example.invalid",
                 "credentialSubject": {
                     "postal_code": "1234",
                     "locality": "here",
@@ -2179,7 +2179,7 @@ class TestDcqlVerification {
                     "VerifiableCredential",
                     "https://credentials.example.com/reduced_identity_credential"
                 ],
-                "issuer": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                "issuer": "https://issuer.example.invalid",
                 "credentialSubject": {
                     "given_name": "John",
                     "family_name": "Doe",
@@ -2393,7 +2393,7 @@ class TestDcqlVerification {
             """
             {
                 "vct": "https://credentials.example.com/reduced_identity_credential",
-                "iss": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                "iss": "https://issuer.example.invalid",
                 "given_name": "John",
                 "family_name": "Doe",
                 "address": {
@@ -2423,7 +2423,7 @@ class TestDcqlVerification {
                     "VerifiableCredential",
                     "https://credentials.example.com/PizzaCustomer"
                 ],
-                "issuer": "https://sprind-eudi-issuer-ws-dev.ubique.ch",
+                "issuer": "https://issuer.example.invalid",
                 "credentialSubject": {
                     "customer_number": "123-333-456-77"
                 }

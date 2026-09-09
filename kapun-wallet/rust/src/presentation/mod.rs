@@ -440,7 +440,7 @@ fn test_presentation_parse() {
               "purpose": "purpose for vct",
               "name": "VCT sd-jwt",
               "filter": {
-                "const": "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/abcd-mitgliedskarte-ozomz/0.0.5"
+                "const": "https://schema.example.invalid/v1/schema/abcd-mitgliedskarte-ozomz/0.0.5"
               },
               "intent_to_retain": false,
               "optional": false

@@ -824,7 +824,7 @@ mod tests {
             "format" : "dc+sd-jwt",
             "meta" : {
                 "vct_values" : [
-                        "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/studierendenausweis-31iq2/0.0.4"
+                        "https://schema.example.invalid/v1/schema/studierendenausweis-31iq2/0.0.4"
                     ]
             },
             "claims" : [
@@ -906,7 +906,7 @@ mod tests {
             "format" : "dc+sd-jwt",
             "meta" : {
                 "vct_values" : [
-                        "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/studierendenausweis-31iq2/0.0.4"
+                        "https://schema.example.invalid/v1/schema/studierendenausweis-31iq2/0.0.4"
                     ]
             },
             "claims" : [
@@ -949,7 +949,7 @@ mod tests {
               "id": "pid",
               "format": "dc+sd-jwt",
               "meta": {
-                "vct_values": [ "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/studierendenausweis-31iq2/0.0.4" ]
+                "vct_values": [ "https://schema.example.invalid/v1/schema/studierendenausweis-31iq2/0.0.4" ]
               },
               "claims": [
                 {"id": "a", "path": ["lastName"]},
@@ -977,7 +977,7 @@ mod tests {
             panic!("")
         };
         assert_eq!(
-            "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/studierendenausweis-31iq2/0.0.4",
+            "https://schema.example.invalid/v1/schema/studierendenausweis-31iq2/0.0.4",
             sdjwt
                 .clone()
                 .get(Arc::new(vec![PointerPart::String("vct".into())]))
@@ -1005,7 +1005,7 @@ mod tests {
               "id": "my_credential",
               "format": "dc+sd-jwt",
               "meta": {
-                "vct_values": [ "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/studierendenausweis-31iq2/0.0.4" ]
+                "vct_values": [ "https://schema.example.invalid/v1/schema/studierendenausweis-31iq2/0.0.4" ]
               },
               "claims": [
                   {
@@ -1093,7 +1093,7 @@ mod tests {
             "format" : "dc+sd-jwt",
             "meta" : {
                 "vct_values" : [
-                        "https://dev-ssi-schema-creator-ws.ubique.ch/v1/schema/studierendenausweis-31iq2/0.0.4"
+                        "https://schema.example.invalid/v1/schema/studierendenausweis-31iq2/0.0.4"
                     ]
             },
             "claims" : [
