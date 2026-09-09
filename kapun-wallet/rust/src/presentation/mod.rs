@@ -470,7 +470,7 @@ fn test_presentation_parse() {
           "fields": [
             {
               "path": [
-                "$['ch.ubique.dev-ssi-schema-creator-ws.1']['lastName']"
+                "$['com.example.test-schema.1']['lastName']"
               ],
               "purpose": "purpose for lastName",
               "name": "lastName",
@@ -479,7 +479,7 @@ fn test_presentation_parse() {
             },
             {
               "path": [
-                "$['ch.ubique.dev-ssi-schema-creator-ws.1']['firstName']"
+                "$['com.example.test-schema.1']['firstName']"
               ],
               "purpose": "purpose for firstName",
               "name": "firstName",
@@ -488,7 +488,7 @@ fn test_presentation_parse() {
             },
             {
               "path": [
-                "$['ch.ubique.dev-ssi-schema-creator-ws.1']['memberNr']"
+                "$['com.example.test-schema.1']['memberNr']"
               ],
               "purpose": "purpose for memberNr",
               "name": "memberNr",
@@ -497,7 +497,7 @@ fn test_presentation_parse() {
             },
             {
               "path": [
-                "$['ch.ubique.dev-ssi-schema-creator-ws.1']['memberSince']"
+                "$['com.example.test-schema.1']['memberSince']"
               ],
               "purpose": "purpose for memberSince",
               "name": "memberSince",
@@ -506,7 +506,7 @@ fn test_presentation_parse() {
             },
             {
               "path": [
-                "$['ch.ubique.dev-ssi-schema-creator-ws.1']['validUntil']"
+                "$['com.example.test-schema.1']['validUntil']"
               ],
               "purpose": "purpose for validUntil",
               "name": "validUntil",
@@ -515,7 +515,7 @@ fn test_presentation_parse() {
             },
             {
               "path": [
-                "$['ch.ubique.dev-ssi-schema-creator-ws.1']['dateOfBirth']"
+                "$['com.example.test-schema.1']['dateOfBirth']"
               ],
               "purpose": "purpose for dateOfBirth",
               "name": "dateOfBirth",
@@ -541,7 +541,7 @@ fn test_presentation_parse() {
   },
   "state": "9c6385bf-d3b7-4f61-acad-6bca9b9c52bb",
   "nonce": "63rN9ze4aoybBI80qTDaXA",
-  "client_id": "funke.ubique.ch",
+  "client_id": "verifier.example.invalid",
   "client_metadata": {
     "vp_formats": {
       "mso_mdoc": {

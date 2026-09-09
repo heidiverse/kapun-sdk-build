@@ -362,7 +362,7 @@ mod sd_jwt_test {
           "fields": [
             {
               "path": [
-                "$['ch.ubique.dev-ssi-schema-creator-ws.1']['resident_address_street']"
+                "$['com.example.test-schema.1']['resident_address_street']"
               ],
               "purpose": "purpose for resident_address_street",
               "name": "resident_address_street",
@@ -371,7 +371,7 @@ mod sd_jwt_test {
             },
             {
               "path": [
-                "$['ch.ubique.dev-ssi-schema-creator-ws.1']['some_attribute']"
+                "$['com.example.test-schema.1']['some_attribute']"
               ],
               "purpose": "purpose for some_attribute",
               "name": "some_attribute",

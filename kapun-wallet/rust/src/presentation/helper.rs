@@ -455,7 +455,7 @@ pub(super) fn create_submission(
 #[cfg(test)]
 pub async fn start_test_presentation(base_url: String) -> String {
     let data = json!({
-        "client_id" : "schnapsladen.ubique.de",
+        "client_id" : "verifier.example.invalid",
         "nonce": "tests-nonce",
         "name": "Sample credential request",
         "purpose": "API tests",

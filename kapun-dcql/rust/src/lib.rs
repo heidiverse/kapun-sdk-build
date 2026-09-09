@@ -855,7 +855,7 @@ mod tests {
             },
             "claims" : [
                 {
-                    "path" : ["ch.ubique.dev-ssi-schema-creator-ws.1", "firstName" ]
+                    "path" : ["com.example.test-schema.1", "firstName" ]
                 }
             ]
         }
@@ -881,7 +881,7 @@ mod tests {
             },
             "claims" : [
                 {
-                    "path" : ["ch.ubique.dev-ssi-schema-creator-ws.1", "firstName" ],
+                    "path" : ["com.example.test-schema.1", "firstName" ],
                     "values" : ["Martina"]
                 }
             ]
