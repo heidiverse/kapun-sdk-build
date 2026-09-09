@@ -19,8 +19,8 @@ This implementation allows a wallet to present verifiable credentials to a verif
 Right now, only the transport layer is implemented, the actual credential presentation and verification needs to be done by the implementing wallet and verifier.
 
 #### Sample applications
-There are crude sample applications for Android and iOS that demonstrate how to use the Kapun SDK.
-Since the SDK is still in early development, they are not yet fully functional and are suspect to change fundamentally.
+The repository includes sample applications for Android and iOS that demonstrate how to use the Kapun SDK.
+The samples are intended for development and may not cover all SDK features while the project continues to evolve.
 
 ## Getting started
 
