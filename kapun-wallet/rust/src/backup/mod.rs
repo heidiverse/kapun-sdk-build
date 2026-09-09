@@ -511,7 +511,7 @@ mod tests {
         let cipher = <Aes256Gcm as aes_gcm::KeyInit>::new_from_slice(&out).unwrap();
         let nonce = Aes256Gcm::generate_nonce(&mut OsRng);
         let test_plaintext = b"synthetic-test-backup";
-        let cipher = cipher.encrypt(&nonce, test_plaintext).unwrap();
+        let cipher = cipher.encrypt(&nonce, test_plaintext.as_slice()).unwrap();
         let share1_serialize = shares.0.first().unwrap().to_owned();
         let share1_serialize: SerializeableShare = (
             share1_serialize.id,
