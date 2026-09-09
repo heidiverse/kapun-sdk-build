@@ -4,6 +4,18 @@ The Kapun SDK is a Kotlin Multiplatform toolkit for building digital-identity wa
 
 The repository also contains sample Android wallet and verifier applications and an iOS sample. The samples are demonstrations and may require application-specific wallet or backend configuration.
 
+## What it covers
+
+- Credential formats: ISO mdoc, SD-JWT VC, W3C Verifiable Credentials, BBS, and Open Badges
+- Protocols and queries: OpenID4VCI, OpenID4VP, DCQL, and BLE proximity presentment
+- Building blocks for wallets, issuers, verifiers, cryptography, trust, and credential visualization
+
+The implementations follow the relevant [OpenID4VCI](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html), [OpenID4VP](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html), [ISO/IEC 18013-5](https://www.iso.org/standard/69084.html), [SD-JWT VC](https://datatracker.ietf.org/doc/draft-ietf-oauth-sd-jwt-vc/), [DCQL](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-digital-credentials-query-la), and [Open Badges](https://www.imsglobal.org/spec/ob/v3p0/) specifications.
+
+## Project status
+
+The project is actively evolving. Check the [releases](https://github.com/KapunSDK/kapun-sdk/releases) for published versions; APIs and implementation details may change between releases.
+
 ## Prerequisites
 
 - JDK 17 or newer
@@ -32,6 +44,8 @@ If the build needs Android SDK information, set `ANDROID_HOME` and create a root
 sdk.dir=/path/to/your/android/sdk
 ```
 
+The sample sources are available in [`examples/android-wallet`](examples/android-wallet), [`examples/android-verifier`](examples/android-verifier), and [`sample-ios-kapun.xcodeproj`](sample-ios-kapun.xcodeproj).
+
 ## Use the published SDK
 
 Released artifacts are available from Maven Central. Add `mavenCentral()` to your repositories and depend on the module you need, for example:
@@ -53,6 +67,10 @@ To publish JVM artifacts to your local Maven repository:
 ```
 
 The resulting JVM coordinates use the `org.kapunsdk` group, for example `org.kapunsdk:kapun-trust-jvm:1.0.0-LOCAL`. Publishing all targets requires the corresponding Rust toolchains. Release signing is disabled by default.
+
+## Get involved
+
+Bug reports and feature requests are welcome in the [issue tracker](https://github.com/KapunSDK/kapun-sdk/issues). Pull requests should include tests or a short explanation when tests are not applicable.
 
 ## License
 
