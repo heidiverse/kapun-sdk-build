@@ -330,7 +330,7 @@ mod sd_jwt_test {
               "name": "VCT sd-jwt",
               "filter": {
                 "enum": [
-                  "https://example.invalid/schemas/format-specific-test-l8dbo/2.0.0"
+                  "https://schema.example.invalid/schemas/format-specific-test-l8dbo/2.0.0"
                 ],
                 "type": "string"
               },
