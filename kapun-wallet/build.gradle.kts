@@ -1,4 +1,5 @@
 import ch.ubique.uniffi.plugin.extensions.useRustUpLinker
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -36,6 +37,8 @@ buildConfig {
 }
 
 kotlin {
+	val kapunWalletXcFramework = XCFramework()
+
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
         freeCompilerArgs.add("-Xwhen-guards")
@@ -68,7 +71,8 @@ kotlin {
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "kapun-wallet"
-            isStatic = true
+            isStatic = rootProject.extra["kapunIosFrameworkIsStatic"] as Boolean
+            kapunWalletXcFramework.add(this)
 
             export(projects.kapunUtil)
             export(projects.kapunCredentials)

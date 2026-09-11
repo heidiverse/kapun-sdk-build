@@ -28,6 +28,17 @@ plugins {
 allprojects {
 	group = "org.kapunsdk"
 	version = getProjectVersion()
+
+	// Static frameworks are the safest default for KMP consumers. Set
+	// -PiosFrameworkLinkage=dynamic when publishing an opt-in dynamic XCFramework.
+	val iosFrameworkLinkage = providers.gradleProperty("iosFrameworkLinkage")
+		.orNull
+		?.lowercase()
+		?: "static"
+	check(iosFrameworkLinkage == "static" || iosFrameworkLinkage == "dynamic") {
+		"iosFrameworkLinkage must be either 'static' or 'dynamic'"
+	}
+	extra["kapunIosFrameworkIsStatic"] = iosFrameworkLinkage == "static"
 }
 
 private fun getProjectVersion(): String {

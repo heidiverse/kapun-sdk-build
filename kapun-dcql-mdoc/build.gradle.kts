@@ -24,7 +24,10 @@ kotlin {
     }
     jvm()
     listOf(iosArm64(), iosSimulatorArm64()).forEach { target ->
-        target.binaries.framework { baseName = "kapun-dcql-mdoc"; isStatic = true }
+        target.binaries.framework {
+            baseName = "kapun-dcql-mdoc"
+            isStatic = rootProject.extra["kapunIosFrameworkIsStatic"] as Boolean
+        }
         target.compilations.configureEach { useRustUpLinker() }
     }
     sourceSets {

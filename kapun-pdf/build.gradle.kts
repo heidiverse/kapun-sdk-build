@@ -36,7 +36,7 @@ kotlin {
 	).forEach { iosTarget ->
 		iosTarget.binaries.framework {
 			baseName = "kapun-pdf"
-			isStatic = true
+			isStatic = rootProject.extra["kapunIosFrameworkIsStatic"] as Boolean
 		}
 
 		iosTarget.binaries.all {
