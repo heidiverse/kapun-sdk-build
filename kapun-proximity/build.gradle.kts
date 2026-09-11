@@ -27,7 +27,7 @@ kotlin {
 	).forEach {
 		it.binaries.framework {
 			baseName = "kapun-proximity"
-			isStatic = rootProject.extra["kapunIosFrameworkIsStatic"] as Boolean
+			isStatic = true
 		}
 	}
 

@@ -68,25 +68,6 @@ export CARGO_TARGET_DIR="/absolute/path/to/shared/heidi-cargo-target"
 
 Open `sample-ios-kapun.xcodeproj` in Xcode, select a simulator or device, and run the `sample-ios-kapun` target. Device builds require your own provisioning profile. The sample requires iOS 16 or newer.
 
-The SDK's Rust code is linked as static `.a` files into the Kotlin/Native framework. This is the
-default because it gives consumers a single framework to link and avoids separate dynamic
-framework embedding and signing. The `kapun-wallet` module exposes an XCFramework task:
-
-```bash
-./gradlew :kapun-wallet:assembleKapun-walletReleaseXCFramework
-```
-
-Static linkage remains the default. To produce an opt-in dynamic Kotlin/Native XCFramework, use:
-
-```bash
-./gradlew :kapun-wallet:assembleKapun-walletReleaseXCFramework \
-    -PiosFrameworkLinkage=dynamic
-```
-
-The dynamic mode changes the Kotlin/Native framework linkage; the Rust implementation remains
-linked from static archives. It is intended for consumers that specifically need a separately
-embedded dynamic framework. The resulting framework must be embedded and signed by the app.
-
 If the build needs Android SDK information, set `ANDROID_HOME` and create a root `local.properties` file containing:
 
 ```properties

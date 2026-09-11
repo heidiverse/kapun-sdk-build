@@ -38,7 +38,7 @@ kotlin {
 	).forEach { iosTarget ->
 		iosTarget.binaries.framework {
 			baseName = "kapun-dcql"
-			isStatic = rootProject.extra["kapunIosFrameworkIsStatic"] as Boolean
+			isStatic = true
 		}
 
 		iosTarget.binaries.all {

@@ -22,7 +22,7 @@ kotlin {
     listOf(iosArm64(), iosSimulatorArm64()).forEach { target ->
         target.binaries.framework {
             baseName = "kapun-credentials"
-            isStatic = rootProject.extra["kapunIosFrameworkIsStatic"] as Boolean
+            isStatic = true
         }
     }
     sourceSets {
