@@ -51,9 +51,13 @@ Use Android-specific Gradle tasks such as `assembleDebug` rather than the root `
 app development. The root build also runs JVM targets; on macOS that includes the macOS Rust
 library needed by JVM/JNA binding generation.
 
-Rust outputs are shared between SDK modules when `CARGO_TARGET_DIR` is set. This is also the way to
-reuse the Cargo cache when the SDK is included in another KMP project. Set the same absolute path
-in both Gradle builds:
+Rust outputs are shared between SDK modules automatically in this checkout. The root build configures
+all UniFFI modules to use `.gradle/cargo-target`, which is ignored by Git and survives Gradle's
+`clean` task. This means developers do not need to set `CARGO_TARGET_DIR` for normal SDK builds.
+
+When the SDK is included in another KMP project, the included SDK build still uses this same
+checkout-local directory. If the consumer is configured as a separate Gradle build that does not
+load the SDK root build configuration, set the same absolute path in both builds:
 
 ```bash
 export CARGO_TARGET_DIR="/absolute/path/to/shared/heidi-cargo-target"
