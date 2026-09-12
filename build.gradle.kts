@@ -1,4 +1,5 @@
 import ch.ubique.uniffi.plugin.dsl.CargoExtension
+import org.gradle.api.tasks.Delete
 import org.gradle.kotlin.dsl.configure
 
 plugins {
@@ -31,11 +32,19 @@ plugins {
 subprojects {
 	pluginManager.withPlugin("ch.ubique.uniffi.plugin") {
 		extensions.configure<CargoExtension> {
-			// Keep Cargo's shared compilation cache inside this checkout, but outside
-			// Gradle's build directories so `clean` does not remove it.
-			targetDirectory.set(rootProject.layout.projectDirectory.dir(".gradle/cargo-target"))
+			// Keep Cargo's shared compilation cache in a visible, dedicated directory.
+			// It is intentionally outside Gradle's build directories so `clean` does not remove it.
+			targetDirectory.set(rootProject.layout.projectDirectory.dir("cargo-target"))
 		}
 	}
+}
+
+// `clean` intentionally preserves the shared Rust cache. Use this task when a completely fresh
+// Cargo build is needed or when reclaiming disk space.
+tasks.register<Delete>("cleanCargoCache") {
+	group = "build"
+	description = "Delete the shared Cargo target directory"
+	delete(layout.projectDirectory.dir("cargo-target"))
 }
 
 allprojects {
