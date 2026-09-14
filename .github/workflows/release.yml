@@ -27,6 +27,11 @@ jobs:
       # Keep Cargo's compilation cache separate from Gradle outputs. Release builds still compile
       # every ABI required by the published artifact.
       CARGO_TARGET_DIR: ${{ runner.temp }}/cargo-target
+      # Keep Cargo's registry and git caches private to this job. The self-hosted runner is
+      # shared by the matrix jobs, and a shared $HOME/.cargo cache makes unrelated jobs wait
+      # on Cargo's package-cache lock.
+      CARGO_HOME: ${{ github.workspace }}/.cargo
+      CARGO_NET_GIT_FETCH_WITH_CLI: "true"
       CARGO_INCREMENTAL: "0"
       RUSTC_WRAPPER: sccache
       SCCACHE_DIR: ${{ runner.temp }}/sccache
@@ -34,6 +39,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7.0.1
+
+      - name: Cache Cargo downloads
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/.cargo/registry
+            ${{ github.workspace }}/.cargo/git
+          key: cargo-${{ runner.os }}-release-${{ matrix.platform }}-${{ hashFiles('**/Cargo.lock', 'rust-toolchain.toml') }}
+          restore-keys: |
+            cargo-${{ runner.os }}-release-${{ matrix.platform }}-
 
       - name: Cache sccache
         uses: actions/cache@v4
@@ -100,12 +115,8 @@ jobs:
       - name: Install bindgen
         run: ./gradlew installBindgen --console=plain
 
-      - name: Prefetch Rust dependencies
-        run: cargo fetch --locked
-
       - name: Publish artifact
         env:
-          CARGO_NET_OFFLINE: "true"
           CC_x86_64_unknown_linux_gnu: x86_64-linux-gnu-gcc
           CXX_x86_64_unknown_linux_gnu: x86_64-linux-gnu-g++
           AR_x86_64_unknown_linux_gnu: x86_64-linux-gnu-ar
