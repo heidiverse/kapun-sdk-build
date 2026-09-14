@@ -29,6 +29,7 @@ jobs:
       # on Cargo's package-cache lock.
       CARGO_HOME: ${{ github.workspace }}/.cargo
       CARGO_NET_GIT_FETCH_WITH_CLI: "true"
+      GIT_TERMINAL_PROMPT: "0"
       CARGO_INCREMENTAL: "0"
       RUSTC_WRAPPER: sccache
       SCCACHE_DIR: ${{ github.workspace }}/.sccache
