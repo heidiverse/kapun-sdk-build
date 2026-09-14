@@ -91,8 +91,18 @@ jobs:
         run: |
           echo "IPHONEOS_DEPLOYMENT_TARGET=$(grep '^IPHONEOS_DEPLOYMENT_TARGET=' gradle.properties | cut -d '=' -f2)" >> "$GITHUB_ENV"
 
+      - name: Clean Gradle outputs
+        run: ./gradlew clean --console=plain
+
+      - name: Install bindgen
+        run: ./gradlew installBindgen --console=plain
+
+      - name: Prefetch Rust dependencies
+        run: cargo fetch --locked
+
       - name: Build
         env:
+          CARGO_NET_OFFLINE: "true"
           CC_x86_64_unknown_linux_gnu: x86_64-linux-gnu-gcc
           CXX_x86_64_unknown_linux_gnu: x86_64-linux-gnu-g++
           AR_x86_64_unknown_linux_gnu: x86_64-linux-gnu-ar
@@ -105,4 +115,4 @@ jobs:
           CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_RUSTFLAGS: "-C link-args=-fstack-protector-all -lssp"
           CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER: x86_64-w64-mingw32-gcc
         run: |
-          ./gradlew clean buildBindings ${{ steps.gradle_tasks.outputs.tasks }} -PreleaseBuild=true --console=plain
+          ./gradlew buildBindings ${{ steps.gradle_tasks.outputs.tasks }} -PreleaseBuild=true -PisolatedCargoTarget=true --console=plain

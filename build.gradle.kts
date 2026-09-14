@@ -29,12 +29,23 @@ plugins {
 	alias(libs.plugins.vanniktech.publish) apply false
 }
 
+val isolatedCargoTarget = providers.gradleProperty("isolatedCargoTarget")
+    .map(String::toBoolean)
+    .orElse(false)
+
 subprojects {
 	pluginManager.withPlugin("ch.ubique.uniffi.plugin") {
 		extensions.configure<CargoExtension> {
-			// Keep Cargo's shared compilation cache in a visible, dedicated directory.
-			// It is intentionally outside Gradle's build directories so `clean` does not remove it.
-			targetDirectory.set(rootProject.layout.projectDirectory.dir("cargo-target"))
+			// Developers use one visible shared cache to avoid duplicate Rust artifacts. CI can opt
+			// into one target directory per module so Gradle/Cargo builds run concurrently; sccache
+			// still deduplicates compiler results across those directories.
+			targetDirectory.set(
+				if (isolatedCargoTarget.get()) {
+					rootProject.layout.projectDirectory.dir("cargo-target/${project.name}")
+				} else {
+					rootProject.layout.projectDirectory.dir("cargo-target")
+				}
+			)
 		}
 	}
 }

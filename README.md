@@ -59,6 +59,11 @@ builds. To remove the Rust cache as well, run:
 ./gradlew cleanCargoCache
 ```
 
+CI builds pass `-PisolatedCargoTarget=true` to give each module its own Cargo target directory and
+allow Rust builds to run concurrently. CI also uses sccache, so compiler results remain shared
+without forcing every module through one Cargo target lock. Developers should keep the default
+shared `cargo-target` unless they specifically need parallel module builds.
+
 When the SDK is included in another KMP project, the included SDK build still uses this same
 checkout-local directory. If the consumer is configured as a separate Gradle build that does not
 load the SDK root build configuration, set the same absolute path in both builds:
