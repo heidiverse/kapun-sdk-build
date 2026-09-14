@@ -26,7 +26,7 @@ jobs:
     env:
       # Keep Cargo's compilation cache separate from Gradle outputs. Release builds still compile
       # every ABI required by the published artifact.
-      CARGO_TARGET_DIR: ${{ runner.temp }}/cargo-target
+      CARGO_TARGET_DIR: ${{ runner.temp }}/cargo-build
       # Keep Cargo's registry and git caches private to this job. The self-hosted runner is
       # shared by the matrix jobs, and a shared $HOME/.cargo cache makes unrelated jobs wait
       # on Cargo's package-cache lock.

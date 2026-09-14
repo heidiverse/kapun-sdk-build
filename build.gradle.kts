@@ -41,9 +41,9 @@ subprojects {
 			// still deduplicates compiler results across those directories.
 			targetDirectory.set(
 				if (isolatedCargoTarget.get()) {
-					rootProject.layout.projectDirectory.dir("cargo-target/${project.name}")
+					rootProject.layout.projectDirectory.dir("cargo-build/${project.name}")
 				} else {
-					rootProject.layout.projectDirectory.dir("cargo-target")
+					rootProject.layout.projectDirectory.dir("cargo-build")
 				}
 			)
 		}
@@ -55,7 +55,7 @@ subprojects {
 tasks.register<Delete>("cleanCargoCache") {
 	group = "build"
 	description = "Delete the shared Cargo target directory"
-	delete(layout.projectDirectory.dir("cargo-target"))
+	delete(layout.projectDirectory.dir("cargo-build"))
 }
 
 allprojects {

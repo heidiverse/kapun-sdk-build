@@ -51,7 +51,7 @@ app development. The root build also runs JVM targets; on macOS that includes th
 library needed by JVM/JNA binding generation.
 
 Rust outputs are shared between SDK modules automatically in this checkout. The root build configures
-all UniFFI modules to use the visible `cargo-target` directory, which is ignored by Git and survives
+all UniFFI modules to use the visible `cargo-build` directory, which is ignored by Git and survives
 Gradle's `clean` task. This means developers do not need to set `CARGO_TARGET_DIR` for normal SDK
 builds. To remove the Rust cache as well, run:
 
@@ -62,14 +62,14 @@ builds. To remove the Rust cache as well, run:
 CI builds pass `-PisolatedCargoTarget=true` to give each module its own Cargo target directory and
 allow Rust builds to run concurrently. CI also uses sccache, so compiler results remain shared
 without forcing every module through one Cargo target lock. Developers should keep the default
-shared `cargo-target` unless they specifically need parallel module builds.
+shared `cargo-build` unless they specifically need parallel module builds.
 
 When the SDK is included in another KMP project, the included SDK build still uses this same
 checkout-local directory. If the consumer is configured as a separate Gradle build that does not
 load the SDK root build configuration, set the same absolute path in both builds:
 
 ```bash
-export CARGO_TARGET_DIR="/absolute/path/to/shared/cargo-target"
+export CARGO_TARGET_DIR="/absolute/path/to/shared/cargo-build"
 ./gradlew :app:assembleDebug
 ```
 

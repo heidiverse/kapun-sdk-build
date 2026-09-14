@@ -23,7 +23,7 @@ jobs:
     env:
       # Share Cargo's target directory between SDK modules in this job. Keep it outside Gradle's
       # build directory so `clean` does not delete it.
-      CARGO_TARGET_DIR: ${{ github.workspace }}/cargo-target
+      CARGO_TARGET_DIR: ${{ github.workspace }}/cargo-build
       # Keep Cargo's registry and git caches private to this job. The self-hosted runner is
       # shared by the matrix jobs, and a shared $HOME/.cargo cache makes unrelated jobs wait
       # on Cargo's package-cache lock.
