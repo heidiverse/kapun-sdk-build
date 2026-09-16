@@ -147,3 +147,7 @@ jobs:
           exit_code=$?
           trap - INT TERM
           exit "$exit_code"
+
+      - name: Show sccache statistics
+        if: always()
+        run: sccache --show-stats
